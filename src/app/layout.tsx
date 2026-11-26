@@ -26,7 +26,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Poko — Kantong rapi, impian pasti",
   description:
-    "Poko Planner — Aplikasi pencatatan keuangan & Dream Planner Gen Z Indonesia bergaya Warm-Paper Neo-Brutalism.",
+    "Poko Planner — Aplikasi pencatatan keuangan pribadi & Dream Planner bergaya Warm-Paper Neo-Brutalism.",
 };
 
 export default function RootLayout({

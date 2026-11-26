@@ -86,8 +86,7 @@ export default function HomePage() {
             Antarmuka bersih, ramah dibaca, dan tetap tajam di layar desktop maupun ponsel.
           </p>
           <p className="text-ink-muted mt-2 text-sm leading-relaxed">
-            Cocok untuk label transaksi, catatan harian, dan panduan target tabungan Gen Z
-            Indonesia.
+            Cocok untuk label transaksi, catatan harian, dan panduan target tabungan sehari-hari.
           </p>
         </article>
       </section>

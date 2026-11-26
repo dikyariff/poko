@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" role="img" aria-label="Pratinjau Antarmuka Poko Planner Bento Dashboard">
+  <defs>
+    <pattern id="previewDots" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#111111" fill-opacity="0.08" />
+    </pattern>
+    <clipPath id="winClip">
+      <rect x="12" y="12" width="1168" height="588" rx="24" />
+    </clipPath>
+  </defs>
+
+  <!-- Window Outer Shadow & Frame -->
+  <rect x="20" y="20" width="1168" height="588" rx="24" fill="#111111" />
+  <rect x="12" y="12" width="1168" height="588" rx="24" fill="#FFFDF5" stroke="#111111" stroke-width="3.5" />
+  <rect x="12" y="12" width="1168" height="588" rx="24" fill="url(#previewDots)" clip-path="url(#winClip)" />
+
+  <!-- Browser Topbar -->
+  <g clip-path="url(#winClip)">
+    <rect x="12" y="12" width="1168" height="50" fill="#FAF6EC" />
+    <line x1="12" y1="62" x2="1180" y2="62" stroke="#111111" stroke-width="2.5" />
+  </g>
+  <circle cx="42" cy="37" r="7" fill="#FF6B8B" stroke="#111111" stroke-width="2" />
+  <circle cx="66" cy="37" r="7" fill="#FFE14D" stroke="#111111" stroke-width="2" />
+  <circle cx="90" cy="37" r="7" fill="#C8FF3D" stroke="#111111" stroke-width="2" />
+
+  <rect x="400" y="23" width="400" height="28" rx="14" fill="#FFFFFF" stroke="#111111" stroke-width="2" />
+  <text x="600" y="41" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, Consolas, monospace" font-size="12.5" font-weight="700" fill="#4A4A52">poko.app / beranda — Kantong Rapi, Impian Pasti</text>
+
+  <!-- LEFT SIDEBAR -->
+  <rect x="34" y="82" width="224" height="496" rx="20" fill="#FFFFFF" stroke="#111111" stroke-width="2.8" />
+  <rect x="38" y="86" width="224" height="496" rx="20" fill="#111111" opacity="0.06" />
+
+  <!-- Sidebar Profile Badge -->
+  <rect x="50" y="98" width="192" height="62" rx="14" fill="#FAF6EC" stroke="#111111" stroke-width="2.2" />
+  <rect x="60" y="108" width="42" height="42" rx="12" fill="#D6B8FF" stroke="#111111" stroke-width="2" />
+  <text x="81" y="136" text-anchor="middle" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="20" font-weight="800" fill="#111111">N</text>
+  <text x="112" y="126" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="15" font-weight="800" fill="#111111">Halo, Niel!</text>
+  <text x="112" y="144" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="11" font-weight="700" fill="#4A4A52">Personal · Aktif</text>
+
+  <!-- Sidebar Navigation Items -->
+  <g transform="translate(50, 178)">
+    <!-- Active: Beranda -->
+    <rect x="3" y="3" width="192" height="42" rx="12" fill="#111111" />
+    <rect x="0" y="0" width="192" height="42" rx="12" fill="#C8FF3D" stroke="#111111" stroke-width="2.2" />
+    <text x="20" y="26" font-family="'Plus Jakarta Sans', 'Segoe UI', sans-serif" font-size="14" font-weight="800" fill="#111111">01 · Beranda</text>
+
+    <!-- Transaksi -->
+    <rect x="0" y="54" width="192" height="40" rx="12" fill="#FFFFFF" stroke="#111111" stroke-width="1.8" stroke-opacity="0.25" />
+    <text x="20" y="79" font-family="'Plus Jakarta Sans', 'Segoe UI', sans-serif" font-size="14" font-weight="700" fill="#111111">02 · Transaksi</text>
+    <rect x="148" y="63" width="32" height="22" rx="8" fill="#FFE14D" stroke="#111111" stroke-width="1.8" />
+    <text x="164" y="78" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="800" fill="#111111">10</text>
+
+    <!-- Impian & Tabungan -->
+    <rect x="0" y="104" width="192" height="40" rx="12" fill="#FFFFFF" stroke="#111111" stroke-width="1.8" stroke-opacity="0.25" />
+    <text x="20" y="129" font-family="'Plus Jakarta Sans', 'Segoe UI', sans-serif" font-size="14" font-weight="700" fill="#111111">03 · Impian</text>
+
+    <!-- Laporan -->
+    <rect x="0" y="154" width="192" height="40" rx="12" fill="#FFFFFF" stroke="#111111" stroke-width="1.8" stroke-opacity="0.25" />
+    <text x="20" y="179" font-family="'Plus Jakarta Sans', 'Segoe UI', sans-serif" font-size="14" font-weight="700" fill="#111111">04 · Laporan</text>
+
+    <!-- Misi & Anti Boncos -->
+    <rect x="0" y="204" width="192" height="40" rx="12" fill="#FFFFFF" stroke="#111111" stroke-width="1.8" stroke-opacity="0.25" />
+    <text x="20" y="229" font-family="'Plus Jakarta Sans', 'Segoe UI', sans-serif" font-size="14" font-weight="700" fill="#111111">05 · Misi XP</text>
+    <rect x="140" y="213" width="40" height="22" rx="8" fill="#D6B8FF" stroke="#111111" stroke-width="1.8" />
+    <text x="160" y="228" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="800" fill="#111111">Lv.5</text>
+  </g>
+
+  <!-- Sidebar Footer Privacy Button -->
+  <rect x="50" y="516" width="192" height="44" rx="12" fill="#FAF6EC" stroke="#111111" stroke-width="2" />
+  <text x="146" y="543" text-anchor="middle" font-family="'Plus Jakarta Sans', 'Segoe UI', sans-serif" font-size="13" font-weight="700" fill="#111111">Mode Privasi: Aktifkan</text>
+
+  <!-- MAIN WORKSPACE AREA -->
+  <!-- Top Workspace Header -->
+  <text x="282" y="114" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="26" font-weight="800" fill="#111111">Beranda Keuangan</text>
+  <rect x="974" y="86" width="184" height="42" rx="12" fill="#111111" />
+  <rect x="970" y="82" width="184" height="42" rx="12" fill="#C8FF3D" stroke="#111111" stroke-width="2.5" />
+  <text x="1062" y="108" text-anchor="middle" font-family="'Plus Jakarta Sans', 'Segoe UI', sans-serif" font-size="14" font-weight="800" fill="#111111">+ Catat Transaksi</text>
+
+  <!-- BENTO ROW 1: Hero Balance (Left) + Quick Scan Struk AI (Right) -->
+  <g transform="translate(282, 142)">
+    <!-- Hero Balance Card -->
+    <rect x="5" y="5" width="554" height="184" rx="20" fill="#111111" />
+    <rect x="0" y="0" width="554" height="184" rx="20" fill="#FFFFFF" stroke="#111111" stroke-width="2.8" />
+
+    <rect x="22" y="20" width="136" height="24" rx="8" fill="#C8FF3D" stroke="#111111" stroke-width="2" />
+    <text x="90" y="36" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="800" fill="#111111">SALDO MULTI-AKUN</text>
+
+    <text x="22" y="86" font-family="'JetBrains Mono', ui-monospace, Consolas, monospace" font-size="38" font-weight="800" fill="#111111">Rp 24.750.000</text>
+
+    <!-- Wallet Pills -->
+    <g transform="translate(22, 112)">
+      <rect x="0" y="0" width="160" height="50" rx="12" fill="#FAF6EC" stroke="#111111" stroke-width="2" />
+      <text x="14" y="20" font-family="'Plus Jakarta Sans', sans-serif" font-size="11.5" font-weight="700" fill="#4A4A52">BCA Utama</text>
+      <text x="14" y="39" font-family="'JetBrains Mono', monospace" font-size="13.5" font-weight="800" fill="#111111">Rp 14.200.000</text>
+
+      <rect x="174" y="0" width="160" height="50" rx="12" fill="#FAF6EC" stroke="#111111" stroke-width="2" />
+      <text x="188" y="20" font-family="'Plus Jakarta Sans', sans-serif" font-size="11.5" font-weight="700" fill="#4A4A52">GoPay / QRIS</text>
+      <text x="188" y="39" font-family="'JetBrains Mono', monospace" font-size="13.5" font-weight="800" fill="#111111">Rp 2.150.000</text>
+
+      <rect x="348" y="0" width="162" height="50" rx="12" fill="#5CE1FF" fill-opacity="0.3" stroke="#111111" stroke-width="2" />
+      <text x="362" y="20" font-family="'Plus Jakarta Sans', sans-serif" font-size="11.5" font-weight="700" fill="#0369A1">Kantong Impian</text>
+      <text x="362" y="39" font-family="'JetBrains Mono', monospace" font-size="13.5" font-weight="800" fill="#0369A1">Rp 8.400.000</text>
+    </g>
+
+    <!-- Scan Struk AI Card -->
+    <g transform="translate(576, 0)">
+      <rect x="5" y="5" width="296" height="184" rx="20" fill="#111111" />
+      <rect x="0" y="0" width="296" height="184" rx="20" fill="#FFE14D" stroke="#111111" stroke-width="2.8" />
+
+      <rect x="20" y="20" width="112" height="24" rx="8" fill="#111111" />
+      <text x="76" y="36" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="800" fill="#C8FF3D">GEMINI AI OCR</text>
+
+      <text x="20" y="76" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="22" font-weight="800" fill="#111111">Scan Struk Instan</text>
+      <text x="20" y="100" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600" fill="#111111">Foto struk kopi atau belanja,</text>
+      <text x="20" y="118" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600" fill="#111111">otomatis masuk kategori.</text>
+
+      <rect x="20" y="134" width="256" height="32" rx="10" fill="#FFFFFF" stroke="#111111" stroke-width="2" />
+      <text x="148" y="155" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="800" fill="#111111">Unggah / Foto Struk -></text>
+    </g>
+  </g>
+
+  <!-- BENTO ROW 2: Recent Transactions (Left) + Cashflow Chart (Right) -->
+  <g transform="translate(282, 348)">
+    <!-- Recent Transactions -->
+    <rect x="5" y="5" width="470" height="230" rx="20" fill="#111111" />
+    <rect x="0" y="0" width="470" height="230" rx="20" fill="#FFFFFF" stroke="#111111" stroke-width="2.8" />
+
+    <text x="22" y="36" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="18" font-weight="800" fill="#111111">Transaksi Terbaru (Tabular IDR)</text>
+
+    <!-- Row 1 -->
+    <rect x="20" y="52" width="430" height="46" rx="12" fill="#FAF6EC" stroke="#111111" stroke-width="1.8" />
+    <rect x="32" y="63" width="76" height="24" rx="7" fill="#C8FF3D" stroke="#111111" stroke-width="1.6" />
+    <text x="70" y="79" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="800" fill="#111111">Masuk</text>
+    <text x="120" y="79" font-family="'Plus Jakarta Sans', sans-serif" font-size="13.5" font-weight="700" fill="#111111">Freelance UI Sprint</text>
+    <text x="436" y="80" text-anchor="end" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="800" fill="#0C753B">+Rp 3.500.000</text>
+
+    <!-- Row 2 -->
+    <rect x="20" y="108" width="430" height="46" rx="12" fill="#FAF6EC" stroke="#111111" stroke-width="1.8" />
+    <rect x="32" y="119" width="76" height="24" rx="7" fill="#FF6B8B" fill-opacity="0.55" stroke="#111111" stroke-width="1.6" />
+    <text x="70" y="135" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="800" fill="#111111">Jajan</text>
+    <text x="120" y="135" font-family="'Plus Jakarta Sans', sans-serif" font-size="13.5" font-weight="700" fill="#111111">Kopi Susu &amp; Makan Siang</text>
+    <text x="436" y="136" text-anchor="end" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="800" fill="#C51D44">-Rp 68.500</text>
+
+    <!-- Row 3 -->
+    <rect x="20" y="164" width="430" height="46" rx="12" fill="#FAF6EC" stroke="#111111" stroke-width="1.8" />
+    <rect x="32" y="175" width="76" height="24" rx="7" fill="#5CE1FF" fill-opacity="0.65" stroke="#111111" stroke-width="1.6" />
+    <text x="70" y="191" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="800" fill="#111111">Impian</text>
+    <text x="120" y="191" font-family="'Plus Jakarta Sans', sans-serif" font-size="13.5" font-weight="700" fill="#111111">Setor Kantong Laptop</text>
+    <text x="436" y="192" text-anchor="end" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="800" fill="#0369A1">Rp 1.000.000</text>
+
+    <!-- Cashflow Bar Mini Chart Card -->
+    <g transform="translate(492, 0)">
+      <rect x="5" y="5" width="380" height="230" rx="20" fill="#111111" />
+      <rect x="0" y="0" width="380" height="230" rx="20" fill="#FFFFFF" stroke="#111111" stroke-width="2.8" />
+
+      <text x="22" y="36" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="18" font-weight="800" fill="#111111">Arus Kas 6 Bulan</text>
+      <rect x="258" y="18" width="100" height="24" rx="8" fill="#D6B8FF" stroke="#111111" stroke-width="1.8" />
+      <text x="308" y="34" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="800" fill="#111111">+38% SURPLUS</text>
+
+      <!-- Bars -->
+      <line x1="24" y1="186" x2="356" y2="186" stroke="#111111" stroke-width="2.2" />
+      <!-- M1 -->
+      <rect x="38" y="114" width="18" height="72" rx="4" fill="#C8FF3D" stroke="#111111" stroke-width="2" />
+      <rect x="60" y="138" width="18" height="48" rx="4" fill="#FF6B8B" stroke="#111111" stroke-width="2" />
+      <text x="58" y="206" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#4A4A52">Jul</text>
+
+      <!-- M2 -->
+      <rect x="104" y="96" width="18" height="90" rx="4" fill="#C8FF3D" stroke="#111111" stroke-width="2" />
+      <rect x="126" y="128" width="18" height="58" rx="4" fill="#FF6B8B" stroke="#111111" stroke-width="2" />
+      <text x="124" y="206" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#4A4A52">Agu</text>
+
+      <!-- M3 -->
+      <rect x="170" y="106" width="18" height="80" rx="4" fill="#C8FF3D" stroke="#111111" stroke-width="2" />
+      <rect x="192" y="142" width="18" height="44" rx="4" fill="#FF6B8B" stroke="#111111" stroke-width="2" />
+      <text x="190" y="206" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#4A4A52">Sep</text>
+
+      <!-- M4 -->
+      <rect x="236" y="82" width="18" height="104" rx="4" fill="#C8FF3D" stroke="#111111" stroke-width="2" />
+      <rect x="258" y="124" width="18" height="62" rx="4" fill="#FF6B8B" stroke="#111111" stroke-width="2" />
+      <text x="256" y="206" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#4A4A52">Okt</text>
+
+      <!-- M5 -->
+      <rect x="302" y="68" width="18" height="118" rx="4" fill="#C8FF3D" stroke="#111111" stroke-width="2" />
+      <rect x="324" y="134" width="18" height="52" rx="4" fill="#FF6B8B" stroke="#111111" stroke-width="2" />
+      <text x="322" y="206" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#111111">Nov</text>
+    </g>
+  </g>
+</svg>
