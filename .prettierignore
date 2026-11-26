@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+build
+coverage
+package-lock.json
+next-env.d.ts
+AGENTS.md
+poko.html
+mucuans-design.html
+index.html
+CONTEXT.md

@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CuanMucuw — Gen Z Financial Tracker UI Prototype</title>
+
+  <!-- Google Fonts: Fredoka (Display) & Plus Jakarta Sans (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Fredoka', 'sans-serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            ink: '#1A1633',
+            cream: '#FFFDF6',
+            lemon: '#FDE047',
+            mint: '#4ADE80',
+            bubblegum: '#F472B6',
+            lavender: '#A78BFA',
+            sky: '#38BDF8',
+            coral: '#FB7185',
+            peach: '#FDBA74',
+            gold: '#FACC15',
+          },
+          boxShadow: {
+            brutal: '3px 3px 0px #1A1633',
+            'brutal-md': '5px 5px 0px #1A1633',
+            'brutal-sm': '2px 2px 0px #1A1633',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root {
+      --app-bg: #FFFDF6;
+    }
+
+    body {
+      background-color: #F3F0FF;
+      background-image: radial-gradient(#D8B4FE 1.5px, transparent 1.5px);
+      background-size: 22px 22px;
+      color: #1A1633;
+    }
+
+    .app-surface {
+      background-color: var(--app-bg);
+    }
+
+    .tactile {
+      transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s ease;
+    }
+    .tactile:hover {
+      transform: translate(-1.5px, -1.5px);
+      box-shadow: 4.5px 4.5px 0px #1A1633;
+    }
+    .tactile:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px #1A1633;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-5px) rotate(2deg); }
+    }
+    .animate-float {
+      animation: floatSlow 3.5s ease-in-out infinite;
+    }
+
+    @keyframes scanLine {
+      0% { top: 8%; }
+      50% { top: 88%; }
+      100% { top: 8%; }
+    }
+    .scan-line {
+      animation: scanLine 1.8s ease-in-out infinite;
+    }
+
+    /* Celengan (Piggy Bank) Animations */
+    @keyframes coinDrop {
+      0% { transform: translateY(-48px) scale(0.8) rotate(0deg); opacity: 0; }
+      20% { opacity: 1; }
+      75% { transform: translateY(16px) scale(1) rotate(180deg); opacity: 1; }
+      100% { transform: translateY(32px) scale(0.5) rotate(240deg); opacity: 0; }
+    }
+    .animate-coin-drop {
+      animation: coinDrop 0.75s cubic-bezier(0.5, 0, 0.75, 0) forwards;
+    }
+
+    @keyframes piggyBounce {
+      0%, 100% { transform: scale(1, 1) translateY(0); }
+      30% { transform: scale(1.08, 0.92) translateY(4px); }
+      60% { transform: scale(0.96, 1.05) translateY(-6px); }
+      80% { transform: scale(1.02, 0.98) translateY(1px); }
+    }
+    .animate-piggy-bounce {
+      animation: piggyBounce 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes sparklePop {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.25); opacity: 1; }
+      100% { transform: scale(0.8) translateY(-10px); opacity: 0; }
+    }
+    .animate-sparkle {
+      animation: sparklePop 0.7s ease-out forwards;
+    }
+
+    /* Dark theme override */
+    .theme-dark {
+      --app-bg: #18142C;
+      color: #F8FAFC;
+    }
+    .theme-dark .surface-card {
+      background-color: #252042 !important;
+      color: #F8FAFC !important;
+      border-color: #A78BFA !important;
+    }
+    .theme-dark .muted-text {
+      color: #CBD5E1 !important;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased min-h-screen py-6 px-4">
+
+  <!-- Top Studio Toolbar -->
+  <div class="max-w-5xl mx-auto mb-6 bg-white border-[2.5px] border-ink rounded-2xl shadow-brutal px-5 py-3 flex flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-lemon border-2 border-ink flex items-center justify-center shadow-brutal-sm">
+        <span class="text-lg">🐷</span>
+      </div>
+      <div>
+        <h1 class="font-display font-bold text-lg leading-tight">CuanMucuw — Prototype UI</h1>
+        <p class="text-xs text-slate-500 font-medium">Multi-Wallet • Celengan Animasi • Investasi Emas • AI Scan</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <span class="text-xs font-bold bg-mint/30 border-2 border-ink px-2.5 py-1 rounded-full">🔥 100% Bebas Iklan</span>
+      <button onclick="openScanModal()" class="tactile bg-bubblegum text-ink font-bold text-xs px-3.5 py-2 rounded-xl border-2 border-ink shadow-brutal-sm">
+        📸 Demo AI Scan
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Interactive Phone Frame -->
+  <div class="flex justify-center">
+    <div id="phone-shell" class="w-full max-w-[390px] h-[820px] app-surface border-[4px] border-ink rounded-[42px] shadow-brutal-md overflow-hidden flex flex-col relative transition-colors duration-300">
+
+      <!-- Status Bar -->
+      <div class="px-6 pt-3 pb-2 flex items-center justify-between text-xs font-bold shrink-0">
+        <span>09:41</span>
+        <div class="w-24 h-5 bg-ink rounded-full"></div>
+        <div class="flex items-center gap-1.5">
+          <span>5G</span>
+          <span>🔋94%</span>
+        </div>
+      </div>
+
+      <!-- Scrollable Screen Content -->
+      <main id="screen-container" class="flex-1 overflow-y-auto no-scrollbar px-4 pb-24 space-y-4">
+
+        <!-- ==================== TAB 1: HOME ==================== -->
+        <section id="tab-home" class="space-y-4 pt-1">
+          <!-- Greeting & Mascot Header -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div id="mascot-avatar" class="w-11 h-11 rounded-2xl bg-lemon border-2 border-ink shadow-brutal-sm flex items-center justify-center animate-float cursor-pointer" onclick="refreshAiInsight()" title="Klik Mucuw untuk saran baru!">
+                <svg viewBox="0 0 64 64" class="w-9 h-9">
+                  <path d="M12 36 C12 18, 52 18, 52 36 C52 50, 44 54, 32 54 C20 54, 12 50, 12 36 Z" fill="#F472B6" stroke="#1A1633" stroke-width="3"/>
+                  <circle cx="24" cy="31" r="3" fill="#1A1633"/>
+                  <circle cx="40" cy="31" r="3" fill="#1A1633"/>
+                  <circle cx="20" cy="36" r="3.5" fill="#FDE047" opacity="0.8"/>
+                  <circle cx="44" cy="36" r="3.5" fill="#FDE047" opacity="0.8"/>
+                  <path d="M27 38 Q32 43 37 38" fill="none" stroke="#1A1633" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M26 17 L30 10 L35 16" fill="#34D399" stroke="#1A1633" stroke-width="2.5" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <p class="text-[11px] font-bold muted-text text-slate-500">Halo, Bestie Cuan! ✨</p>
+                <h2 class="font-display font-bold text-base leading-tight">Dompet Kamu Aman</h2>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button onclick="switchTab('customize')" class="tactile bg-white surface-card border-2 border-ink rounded-xl w-8 h-8 shadow-brutal-sm flex items-center justify-center text-sm" title="Tema UI">🎨</button>
+              <button onclick="switchTab('challenge')" class="tactile bg-white surface-card border-2 border-ink rounded-xl px-2.5 py-1.5 shadow-brutal-sm flex items-center gap-1 text-xs font-extrabold">
+                <span>🔥</span><span id="streak-count">12</span><span>hr</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Total Balance Card -->
+          <div class="bg-lemon border-[2.5px] border-ink rounded-3xl p-4 shadow-brutal relative overflow-hidden">
+            <div class="flex items-center justify-between mb-1">
+              <span id="active-wallet-label" class="text-[11px] font-extrabold uppercase tracking-wider text-ink/75">Total Semua Wallet</span>
+              <button onclick="toggleBalance()" id="btn-eye" class="text-[11px] font-bold bg-white/85 border-2 border-ink rounded-lg px-2 py-0.5 text-ink">👁️ Sembunyi</button>
+            </div>
+            <div id="balance-display" class="font-display font-bold text-3xl text-ink tracking-tight mb-3">
+              Rp 4.850.000
+            </div>
+
+            <!-- Income vs Expense -->
+            <div class="grid grid-cols-2 gap-2.5 mb-3">
+              <div class="bg-white/90 border-2 border-ink rounded-2xl p-2.5">
+                <p class="text-[11px] font-bold text-slate-500">Masuk 💸</p>
+                <p id="total-income" class="font-display font-bold text-sm text-emerald-600">+Rp 6.500.000</p>
+              </div>
+              <div class="bg-white/90 border-2 border-ink rounded-2xl p-2.5">
+                <p class="text-[11px] font-bold text-slate-500">Keluar 🛍️</p>
+                <p id="total-expense" class="font-display font-bold text-sm text-rose-600">-Rp 1.650.000</p>
+              </div>
+            </div>
+
+            <!-- Monthly Budget Bar -->
+            <div>
+              <div class="flex justify-between text-[11px] font-bold text-ink mb-1">
+                <span>Budget Harian Terpakai</span>
+                <span id="budget-pct">55% (Aman!)</span>
+              </div>
+              <div class="w-full h-2.5 bg-white border-2 border-ink rounded-full overflow-hidden">
+                <div id="budget-bar" class="h-full bg-mint border-r-2 border-ink transition-all duration-500" style="width: 55%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MULTIPLE WALLET CAROUSEL -->
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-display font-bold text-sm">Dompet Saya (Multi-Wallet)</h3>
+              <button onclick="openWalletModal()" class="text-[11px] font-extrabold bg-mint/40 border border-ink px-2 py-0.5 rounded-lg text-ink">+ Wallet</button>
+            </div>
+            <div id="wallet-carousel" class="flex gap-2.5 overflow-x-auto no-scrollbar pb-1">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- AI Insights by Mucuw -->
+          <div class="bg-lavender/30 surface-card border-[2.5px] border-ink rounded-2xl p-3.5 shadow-brutal-sm">
+            <div class="flex items-start gap-2.5">
+              <span class="text-xl shrink-0">🤖</span>
+              <div class="flex-1">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-extrabold uppercase tracking-wide text-indigo-900 bg-white border border-ink px-2 py-0.5 rounded-full">AI Insight by Mucuw</span>
+                  <button onclick="refreshAiInsight()" class="text-[11px] font-bold underline">Ganti Saran</button>
+                </div>
+                <p id="ai-insight-text" class="text-xs font-semibold mt-1.5 leading-relaxed">
+                  "Jajan kopi minggu ini turun 20%! Kalau konsisten sampai Minggu, kamu bisa nambah Rp 150rb ke Celengan! 🚀"
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Transactions -->
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-display font-bold text-sm">Transaksi Terbaru</h3>
+              <div class="flex gap-1">
+                <button onclick="filterTx('all', this)" class="tx-filter text-[11px] font-bold px-2 py-0.5 rounded-lg border border-ink bg-ink text-white">Semua</button>
+                <button onclick="filterTx('expense', this)" class="tx-filter text-[11px] font-bold px-2 py-0.5 rounded-lg border border-ink bg-white text-ink">Keluar</button>
+                <button onclick="filterTx('income', this)" class="tx-filter text-[11px] font-bold px-2 py-0.5 rounded-lg border border-ink bg-white text-ink">Masuk</button>
+              </div>
+            </div>
+            <div id="tx-list" class="space-y-2">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== TAB 2: TABUNGAN & CELENGAN ANIMASI ==================== -->
+        <section id="tab-savings" class="hidden space-y-4 pt-1">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="font-display font-bold text-xl">Celengan &amp; Dreams 🐷</h2>
+              <p class="text-xs muted-text text-slate-500 font-medium">Nabung seru lihat celengan makin gemuk!</p>
+            </div>
+            <button onclick="addNewDream()" class="tactile bg-mint text-ink border-2 border-ink rounded-xl px-3 py-1.5 text-xs font-extrabold shadow-brutal-sm">+ Dream</button>
+          </div>
+
+          <!-- Interactive Animated Celengan Card -->
+          <div class="bg-bubblegum/25 surface-card border-[2.5px] border-ink rounded-3xl p-4 shadow-brutal text-center relative overflow-hidden">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-[11px] font-extrabold bg-white text-ink border border-ink px-2.5 py-0.5 rounded-full">Celengan Utama</span>
+              <span id="celengan-level" class="text-[11px] font-extrabold text-ink bg-lemon border border-ink px-2 py-0.5 rounded-full">Level: Gendut ✨</span>
+            </div>
+
+            <!-- Piggy Bank Stage -->
+            <div class="relative h-40 flex items-center justify-center my-1">
+              <!-- Animated Falling Coin -->
+              <div id="falling-coin" class="hidden absolute top-2 z-20 w-9 h-9 rounded-full bg-gold border-[2.5px] border-ink flex items-center justify-center font-display font-bold text-sm text-ink shadow-brutal-sm">
+                Rp
+              </div>
+              <!-- Sparkles -->
+              <div id="piggy-sparkles" class="hidden absolute inset-0 pointer-events-none flex items-center justify-center">
+                <span class="animate-sparkle text-2xl -translate-x-16 -translate-y-8">✨</span>
+                <span class="animate-sparkle text-2xl translate-x-16 -translate-y-10">💖</span>
+                <span class="animate-sparkle text-xl translate-x-12 translate-y-6">⭐</span>
+              </div>
+
+              <!-- Cute Piggy Bank SVG -->
+              <svg id="piggy-svg" viewBox="0 0 180 140" class="w-40 h-32 cursor-pointer transition-transform" onclick="feedCelengan(20000)">
+                <!-- Ears -->
+                <path d="M46 42 L38 18 L64 32 Z" fill="#F472B6" stroke="#1A1633" stroke-width="4" stroke-linejoin="round"/>
+                <path d="M118 32 L138 16 L132 44 Z" fill="#F472B6" stroke="#1A1633" stroke-width="4" stroke-linejoin="round"/>
+                <!-- Legs -->
+                <rect x="52" y="106" width="18" height="20" rx="6" fill="#EC4899" stroke="#1A1633" stroke-width="4"/>
+                <rect x="108" y="106" width="18" height="20" rx="6" fill="#EC4899" stroke="#1A1633" stroke-width="4"/>
+                <!-- Tail -->
+                <path d="M148 75 Q168 62 162 82 Q158 92 168 90" fill="none" stroke="#1A1633" stroke-width="4" stroke-linecap="round"/>
+                <!-- Main Body -->
+                <ellipse cx="90" cy="76" rx="58" ry="44" fill="#F9A8D4" stroke="#1A1633" stroke-width="4"/>
+                <!-- Coin Slot -->
+                <rect x="74" y="36" width="32" height="7" rx="3.5" fill="#1A1633"/>
+                <!-- Snout -->
+                <ellipse cx="38" cy="78" rx="16" ry="13" fill="#F472B6" stroke="#1A1633" stroke-width="4"/>
+                <circle cx="33" cy="77" r="2.5" fill="#1A1633"/>
+                <circle cx="42" cy="77" r="2.5" fill="#1A1633"/>
+                <!-- Eyes & Cheek -->
+                <circle cx="64" cy="64" r="4.5" fill="#1A1633"/>
+                <circle cx="62.5" cy="62.5" r="1.5" fill="#FFFFFF"/>
+                <circle cx="72" cy="76" r="5" fill="#FDE047" opacity="0.75"/>
+                <!-- Smile -->
+                <path d="M52 86 Q60 92 68 86" fill="none" stroke="#1A1633" stroke-width="3.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+
+            <p class="text-[11px] font-bold muted-text text-slate-600">Total Isi Celengan</p>
+            <p id="celengan-total" class="font-display font-bold text-2xl mb-3">Rp 1.850.000</p>
+
+            <!-- Quick Drop Coin Buttons -->
+            <div class="grid grid-cols-3 gap-2">
+              <button onclick="feedCelengan(10000)" class="tactile bg-lemon text-ink border-2 border-ink rounded-xl py-2 text-xs font-extrabold shadow-brutal-sm">+10rb 🪙</button>
+              <button onclick="feedCelengan(50000)" class="tactile bg-mint text-ink border-2 border-ink rounded-xl py-2 text-xs font-extrabold shadow-brutal-sm">+50rb 💵</button>
+              <button onclick="feedCelengan(100000)" class="tactile bg-sky text-ink border-2 border-ink rounded-xl py-2 text-xs font-extrabold shadow-brutal-sm">+100rb 💎</button>
+            </div>
+          </div>
+
+          <!-- Dream Planner List -->
+          <div>
+            <h3 class="font-display font-bold text-sm mb-2">Target Tabungan (Dreams)</h3>
+            <div id="dreams-list" class="space-y-3">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== TAB 3: INVESTASI EMAS ==================== -->
+        <section id="tab-gold" class="hidden space-y-4 pt-1">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="font-display font-bold text-xl">Investasi Emas 🪙</h2>
+              <p class="text-xs muted-text text-slate-500 font-medium">Pantau gramasi &amp; cuan emasmu</p>
+            </div>
+            <button onclick="fetchRealtimeGold()" id="btn-sync-gold" class="tactile bg-gold text-ink border-2 border-ink rounded-xl px-3 py-1.5 text-xs font-extrabold shadow-brutal-sm">
+              ⚡ Sync Live
+            </button>
+          </div>
+
+          <!-- Gold Price Mode Card (Realtime vs Manual) -->
+          <div class="bg-gold/30 surface-card border-[2.5px] border-ink rounded-3xl p-4 shadow-brutal space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold uppercase tracking-wide">Harga Emas / Gram</span>
+              <div class="flex bg-white border-2 border-ink rounded-xl p-0.5 text-[10px] font-extrabold text-ink">
+                <button onclick="setGoldMode('realtime')" id="gold-mode-rt" class="px-2 py-0.5 rounded-lg bg-ink text-white">🌐 Realtime</button>
+                <button onclick="setGoldMode('manual')" id="gold-mode-manual" class="px-2 py-0.5 rounded-lg">✏️ Manual</button>
+              </div>
+            </div>
+
+            <div class="flex items-baseline justify-between">
+              <div>
+                <p id="gold-price-display" class="font-display font-bold text-2xl">Rp 1.540.000</p>
+                <p id="gold-source-status" class="text-[10px] font-bold text-emerald-700">● Harga acuan pasar (per gram)</p>
+              </div>
+              <span class="text-xs font-extrabold bg-white text-ink border border-ink px-2 py-1 rounded-xl">24K / Antam</span>
+            </div>
+
+            <!-- Manual Price Input (toggled when Manual mode is active) -->
+            <div id="gold-manual-box" class="hidden bg-white/90 border-2 border-ink rounded-2xl p-2.5 flex items-center gap-2 text-ink">
+              <input id="manual-gold-input" type="number" placeholder="Masukkan harga/gram (Rp)" class="flex-1 text-xs font-bold bg-transparent focus:outline-none" value="1540000" />
+              <button onclick="applyManualGoldPrice()" class="tactile bg-mint border-2 border-ink rounded-xl px-3 py-1 text-xs font-extrabold">Terapkan</button>
+            </div>
+          </div>
+
+          <!-- Portfolio Summary -->
+          <div class="bg-white surface-card border-[2.5px] border-ink rounded-3xl p-4 shadow-brutal-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-[11px] font-bold muted-text text-slate-500">Total Emas Dimiliki</p>
+                <p id="gold-grams-total" class="font-display font-bold text-2xl">3.250 gram</p>
+              </div>
+              <div class="text-right">
+                <p class="text-[11px] font-bold muted-text text-slate-500">Nilai Portofolio</p>
+                <p id="gold-value-total" class="font-display font-bold text-lg text-amber-600">Rp 5.005.000</p>
+              </div>
+            </div>
+            <div class="bg-mint/25 border-2 border-ink rounded-2xl p-2.5 flex items-center justify-between text-xs font-bold text-ink">
+              <span>Estimasi Untung/Rugi</span>
+              <span id="gold-pnl" class="text-emerald-700 font-extrabold">+Rp 355.000 (+7.6%) 📈</span>
+            </div>
+          </div>
+
+          <!-- Buy / Log Gold Form -->
+          <div class="bg-white surface-card border-2 border-ink rounded-2xl p-3.5 shadow-brutal-sm space-y-2.5">
+            <p class="font-display font-bold text-sm">Catat Beli Emas Baru ✨</p>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="text-[10px] font-bold muted-text text-slate-500">Nominal (Rp)</label>
+                <input id="buy-gold-rp" type="number" oninput="syncGoldBuy('rp')" placeholder="500000" class="w-full border-2 border-ink rounded-xl px-2.5 py-1.5 text-xs font-bold text-ink bg-white" />
+              </div>
+              <div>
+                <label class="text-[10px] font-bold muted-text text-slate-500">Gramasi (gr)</label>
+                <input id="buy-gold-gr" type="number" step="0.001" oninput="syncGoldBuy('gr')" placeholder="0.325" class="w-full border-2 border-ink rounded-xl px-2.5 py-1.5 text-xs font-bold text-ink bg-white" />
+              </div>
+            </div>
+            <button onclick="buyGold()" class="tactile w-full bg-gold text-ink border-2 border-ink rounded-xl py-2 font-display font-bold text-sm shadow-brutal-sm">
+              + Tambah ke Portofolio Emas 🪙
+            </button>
+          </div>
+        </section>
+
+        <!-- ==================== TAB 4: CHALLENGE & GAMIFICATION ==================== -->
+        <section id="tab-challenge" class="hidden space-y-4 pt-1">
+          <div>
+            <h2 class="font-display font-bold text-xl">Spending Challenge 🏆</h2>
+            <p class="text-xs muted-text text-slate-500 font-medium">Selesaikan misi hemat &amp; naikkan level Mucuw!</p>
+          </div>
+
+          <div class="bg-mint/40 surface-card border-[2.5px] border-ink rounded-3xl p-4 shadow-brutal flex items-center gap-3">
+            <div class="w-14 h-14 rounded-2xl bg-lemon border-2 border-ink flex items-center justify-center text-3xl shrink-0">🦁</div>
+            <div class="flex-1">
+              <div class="flex justify-between items-center">
+                <span class="font-display font-bold text-base">Lv. 4 — Sultan Hemat</span>
+                <span id="xp-text" class="text-xs font-extrabold bg-white text-ink border border-ink px-2 py-0.5 rounded-full">420 / 500 XP</span>
+              </div>
+              <div class="w-full h-3 bg-white border-2 border-ink rounded-full mt-2 overflow-hidden">
+                <div id="xp-bar" class="h-full bg-bubblegum transition-all duration-300" style="width: 84%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="challenge-list" class="space-y-2.5">
+            <!-- Populated by JS -->
+          </div>
+        </section>
+
+        <!-- ==================== TAB 5: CUSTOMIZE UI ==================== -->
+        <section id="tab-customize" class="hidden space-y-4 pt-1">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="font-display font-bold text-xl">Kustomisasi UI 🎨</h2>
+              <p class="text-xs muted-text text-slate-500 font-medium">Ubah tema warna &amp; vibe aplikasi</p>
+            </div>
+            <button onclick="switchTab('home')" class="text-xs font-bold underline">Kembali</button>
+          </div>
+
+          <div class="bg-white surface-card border-2 border-ink rounded-2xl p-4 shadow-brutal-sm space-y-3">
+            <p class="text-xs font-extrabold uppercase tracking-wide">Pilih Tema Warna</p>
+            <div class="grid grid-cols-2 gap-2.5">
+              <button onclick="setTheme('cream')" class="tactile bg-[#FFFDF6] text-ink border-2 border-ink rounded-xl p-3 text-left shadow-brutal-sm">
+                <div class="w-6 h-6 rounded-full bg-lemon border-2 border-ink mb-1.5"></div>
+                <p class="font-bold text-xs">Cream Pop</p>
+                <p class="text-[10px] text-slate-500">Default Cerah</p>
+              </button>
+              <button onclick="setTheme('matcha')" class="tactile bg-[#ECFDF5] text-ink border-2 border-ink rounded-xl p-3 text-left shadow-brutal-sm">
+                <div class="w-6 h-6 rounded-full bg-mint border-2 border-ink mb-1.5"></div>
+                <p class="font-bold text-xs">Matcha Chill</p>
+                <p class="text-[10px] text-slate-500">Adem &amp; Segar</p>
+              </button>
+              <button onclick="setTheme('lavender')" class="tactile bg-[#F5F3FF] text-ink border-2 border-ink rounded-xl p-3 text-left shadow-brutal-sm">
+                <div class="w-6 h-6 rounded-full bg-lavender border-2 border-ink mb-1.5"></div>
+                <p class="font-bold text-xs">Lavender Dream</p>
+                <p class="text-[10px] text-slate-500">Aesthetic Gen Z</p>
+              </button>
+              <button onclick="setTheme('dark')" class="tactile bg-[#18142C] text-white border-2 border-ink rounded-xl p-3 text-left shadow-brutal-sm">
+                <div class="w-6 h-6 rounded-full bg-bubblegum border-2 border-white mb-1.5"></div>
+                <p class="font-bold text-xs">Midnight Mode</p>
+                <p class="text-[10px] text-slate-300">Nyaman Malam</p>
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Floating Bottom Navigation Bar -->
+      <nav class="absolute bottom-3 left-3 right-3 bg-white border-[2.5px] border-ink rounded-2xl shadow-brutal px-2 py-1.5 flex items-center justify-around z-20 text-ink">
+        <button onclick="switchTab('home')" data-tab="home" class="nav-btn flex flex-col items-center px-2.5 py-1 rounded-xl bg-lemon border-2 border-ink font-bold">
+          <span class="text-base">🏠</span>
+          <span class="text-[10px]">Home</span>
+        </button>
+        <button onclick="switchTab('savings')" data-tab="savings" class="nav-btn flex flex-col items-center px-2.5 py-1 rounded-xl border-2 border-transparent font-bold opacity-70">
+          <span class="text-base">🐷</span>
+          <span class="text-[10px]">Tabungan</span>
+        </button>
+
+        <!-- Center AI Scan / Add Button -->
+        <button onclick="openScanModal()" class="tactile -mt-6 w-12 h-12 rounded-2xl bg-bubblegum border-[2.5px] border-ink shadow-brutal flex items-center justify-center text-xl font-bold" title="AI Scan Struk / Tambah Transaksi">
+          📸
+        </button>
+
+        <button onclick="switchTab('gold')" data-tab="gold" class="nav-btn flex flex-col items-center px-2.5 py-1 rounded-xl border-2 border-transparent font-bold opacity-70">
+          <span class="text-base">🪙</span>
+          <span class="text-[10px]">Emas</span>
+        </button>
+        <button onclick="switchTab('challenge')" data-tab="challenge" class="nav-btn flex flex-col items-center px-2.5 py-1 rounded-xl border-2 border-transparent font-bold opacity-70">
+          <span class="text-base">🏆</span>
+          <span class="text-[10px]">Misi</span>
+        </button>
+      </nav>
+
+      <!-- ==================== MODAL: AI SCAN STRUK / QRIS & MANUAL ==================== -->
+      <div id="scan-modal" class="hidden absolute inset-0 bg-ink/60 backdrop-blur-xs z-40 flex items-end justify-center p-3">
+        <div class="w-full bg-white text-ink border-[3px] border-ink rounded-3xl p-4 shadow-brutal-md space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="font-display font-bold text-lg">Smart AI Scanner 📸</h3>
+            <button onclick="closeScanModal()" class="w-7 h-7 rounded-full border-2 border-ink bg-slate-100 font-bold text-xs">✕</button>
+          </div>
+
+          <div id="scanner-box" class="bg-slate-900 text-white border-2 border-ink rounded-2xl p-3 relative overflow-hidden text-center">
+            <div id="scan-beam" class="hidden scan-line absolute left-0 right-0 h-0.5 bg-mint shadow-[0_0_8px_#4ADE80]"></div>
+            <p id="scan-status" class="text-xs font-semibold text-slate-200 mb-2">Pilih simulasi scan struk atau screenshot QRIS:</p>
+            <div class="grid grid-cols-2 gap-2">
+              <button onclick="simulateScan('Kopi Kenangan', 32000, '☕ Jajan', 'gopay')" class="tactile bg-lemon text-ink text-xs font-extrabold py-2 px-2 rounded-xl border-2 border-ink">
+                🧾 Scan Struk Kopi
+              </button>
+              <button onclick="simulateScan('Warteg Bahari QRIS', 22000, '🍜 Makan', 'bca')" class="tactile bg-sky text-ink text-xs font-extrabold py-2 px-2 rounded-xl border-2 border-ink">
+                📱 Share SS QRIS
+              </button>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" onclick="setFormType('expense')" id="type-expense" class="py-1.5 text-xs font-extrabold rounded-xl border-2 border-ink bg-coral/40">Pengeluaran 💸</button>
+              <button type="button" onclick="setFormType('income')" id="type-income" class="py-1.5 text-xs font-extrabold rounded-xl border-2 border-ink bg-white">Pemasukan 💰</button>
+            </div>
+            <input id="input-title" type="text" placeholder="Nama transaksi (cth: Matcha Latte)" class="w-full border-2 border-ink rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none" />
+            <div class="grid grid-cols-2 gap-2">
+              <input id="input-amount" type="number" placeholder="Nominal (Rp)" class="w-full border-2 border-ink rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none" />
+              <select id="input-cat" class="w-full border-2 border-ink rounded-xl px-2 py-2 text-xs font-bold bg-white">
+                <option value="🍜 Makan">🍜 Makan</option>
+                <option value="☕ Jajan">☕ Jajan</option>
+                <option value="🚗 Transport">🚗 Transport</option>
+                <option value="🛍️ Belanja">🛍️ Belanja</option>
+                <option value="💼 Gaji/Cuan">💼 Gaji/Cuan</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-[10px] font-bold text-slate-500">Pilih Wallet</label>
+              <select id="input-wallet" class="w-full border-2 border-ink rounded-xl px-2 py-1.5 text-xs font-bold bg-white"></select>
+            </div>
+            <button onclick="saveTransaction()" class="tactile w-full bg-mint border-2 border-ink rounded-xl py-2.5 font-display font-bold text-sm shadow-brutal-sm">
+              Simpan ke Catatan ✅
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== MODAL: TAMBAH WALLET BARU ==================== -->
+      <div id="wallet-modal" class="hidden absolute inset-0 bg-ink/60 backdrop-blur-xs z-40 flex items-center justify-center p-4">
+        <div class="w-full bg-white text-ink border-[3px] border-ink rounded-3xl p-4 shadow-brutal-md space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="font-display font-bold text-lg">Tambah Wallet Baru 💳</h3>
+            <button onclick="closeWalletModal()" class="w-7 h-7 rounded-full border-2 border-ink bg-slate-100 font-bold text-xs">✕</button>
+          </div>
+          <input id="new-wallet-name" type="text" placeholder="Nama Wallet (cth: SeaBank, OVO)" class="w-full border-2 border-ink rounded-xl px-3 py-2 text-xs font-semibold" />
+          <input id="new-wallet-balance" type="number" placeholder="Saldo Awal (Rp)" class="w-full border-2 border-ink rounded-xl px-3 py-2 text-xs font-semibold" />
+          <button onclick="createWallet()" class="tactile w-full bg-lemon border-2 border-ink rounded-xl py-2.5 font-display font-bold text-sm shadow-brutal-sm">
+            Simpan Wallet ✅
+          </button>
+        </div>
+      </div>
+
+      <!-- Toast Notification -->
+      <div id="toast" class="hidden absolute top-12 left-1/2 -translate-x-1/2 bg-ink text-white text-xs font-bold px-3.5 py-2 rounded-full shadow-lg z-50 whitespace-nowrap">
+        Tersimpan!
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // ==================== STATE ====================
+    let balanceHidden = false;
+    let currentFilter = 'all';
+    let activeWalletFilter = 'all';
+    let formType = 'expense';
+    let xp = 420;
+    let celenganBalance = 1850000;
+
+    // Gold State
+    let goldMode = 'realtime';
+    let goldPricePerGram = 1540000;
+    let goldTotalGrams = 3.250;
+    let goldTotalCost = 4650000;
+
+    const wallets = [
+      { id: 'bca', name: 'Bank BCA', emoji: '🏦', balance: 2850000, color: 'bg-sky/30' },
+      { id: 'gopay', name: 'GoPay', emoji: '💚', balance: 950000, color: 'bg-mint/35' },
+      { id: 'dana', name: 'DANA', emoji: '💙', balance: 620000, color: 'bg-lavender/35' },
+      { id: 'cash', name: 'Tunai', emoji: '💵', balance: 430000, color: 'bg-peach/40' },
+    ];
+
+    const transactions = [
+      { id: 1, title: 'Fore Coffee Arena', cat: '☕ Jajan', walletId: 'gopay', amount: 38000, type: 'expense', time: 'Hari ini, 14:20' },
+      { id: 2, title: 'Gaji Freelance UI', cat: '💼 Gaji/Cuan', walletId: 'bca', amount: 1500000, type: 'income', time: 'Kemarin' },
+      { id: 3, title: 'Gojek ke Kampus', cat: '🚗 Transport', walletId: 'gopay', amount: 24000, type: 'expense', time: 'Kemarin' },
+      { id: 4, title: 'Mie Gacoan Level 3', cat: '🍜 Makan', walletId: 'dana', amount: 35000, type: 'expense', time: '2 hari lalu' },
+    ];
+
+    const dreams = [
+      { id: 1, name: 'iPhone 16 Pro', emoji: '📱', current: 10200000, target: 15000000, color: 'bg-bubblegum' },
+      { id: 2, name: 'Liburan Bali 4H3M', emoji: '🏝️', current: 2400000, target: 4000000, color: 'bg-sky' },
+      { id: 3, name: 'Dana Darurat Aman', emoji: '🛡️', current: 4500000, target: 6000000, color: 'bg-mint' },
+    ];
+
+    const challenges = [
+      { id: 1, title: 'No Boba & Kopi Mahal 3 Hari', reward: '+50 XP', progress: '2/3 hari', done: false },
+      { id: 2, title: 'Catat Pengeluaran Pakai AI Scan', reward: '+30 XP', progress: 'Siap Klaim', done: false },
+      { id: 3, title: 'Masak / Bawa Bekal 5 Hari', reward: '+100 XP', progress: 'Selesai', done: true },
+    ];
+
+    const aiInsights = [
+      '"Jajan kopi minggu ini turun 20%! Kalau konsisten sampai Minggu, kamu bisa nambah Rp 150rb ke Celengan! 🚀"',
+      '"Saldo GoPay masih aman buat seminggu, tapi DANA tinggal Rp 620rb. Yuk atur prioritas jajan! 👀"',
+      '"Harga emas lagi naik! Portofolio emasmu sekarang untung +7.6% dibanding harga beli rata-rata 🪙✨"',
+      '"Streak catatan keuanganmu sudah 12 hari! Kamu masuk top 10% Gen Z paling rapi minggu ini! 🏆"'
+    ];
+    let insightIdx = 0;
+
+    function formatRp(num) {
+      return 'Rp ' + Math.round(num).toLocaleString('id-ID');
+    }
+
+    // ==================== WALLETS ====================
+    function renderWallets() {
+      const container = document.getElementById('wallet-carousel');
+      const select = document.getElementById('input-wallet');
+
+      const allCard = `
+        <button onclick="selectWalletFilter('all')" class="shrink-0 w-28 text-left border-2 border-ink rounded-2xl p-2.5 shadow-brutal-sm transition-all ${activeWalletFilter === 'all' ? 'bg-ink text-white' : 'bg-white text-ink'}">
+          <div class="text-base mb-0.5">👛</div>
+          <p class="text-[11px] font-extrabold truncate">Semua</p>
+          <p class="font-display font-bold text-xs">${balanceHidden ? '•••' : formatRp(wallets.reduce((s, w) => s + w.balance, 0))}</p>
+        </button>
+      `;
+
+      const walletCards = wallets.map(w => `
+        <button onclick="selectWalletFilter('${w.id}')" class="shrink-0 w-32 text-left border-2 border-ink rounded-2xl p-2.5 shadow-brutal-sm transition-all ${activeWalletFilter === w.id ? 'ring-2 ring-ink bg-lemon text-ink' : w.color + ' surface-card'}">
+          <div class="text-base mb-0.5">${w.emoji}</div>
+          <p class="text-[11px] font-extrabold truncate">${w.name}</p>
+          <p class="font-display font-bold text-xs">${balanceHidden ? 'Rp ••••' : formatRp(w.balance)}</p>
+        </button>
+      `).join('');
+
+      container.innerHTML = allCard + walletCards;
+      select.innerHTML = wallets.map(w => `<option value="${w.id}">${w.emoji} ${w.name} (${formatRp(w.balance)})</option>`).join('');
+      updateTotals();
+    }
+
+    function selectWalletFilter(id) {
+      activeWalletFilter = id;
+      renderWallets();
+      renderTransactions();
+    }
+
+    function openWalletModal() {
+      document.getElementById('wallet-modal').classList.remove('hidden');
+    }
+    function closeWalletModal() {
+      document.getElementById('wallet-modal').classList.add('hidden');
+    }
+    function createWallet() {
+      const name = document.getElementById('new-wallet-name').value.trim();
+      const bal = parseInt(document.getElementById('new-wallet-balance').value, 10) || 0;
+      if (!name) return showToast('Isi nama wallet dulu!');
+      wallets.push({ id: 'w_' + Date.now(), name, emoji: '💳', balance: bal, color: 'bg-mint/30' });
+      document.getElementById('new-wallet-name').value = '';
+      document.getElementById('new-wallet-balance').value = '';
+      closeWalletModal();
+      renderWallets();
+      showToast('Wallet ' + name + ' ditambahkan! 💳');
+    }
+
+    // ==================== TRANSACTIONS & TOTALS ====================
+    function updateTotals() {
+      const targetWallet = wallets.find(w => w.id === activeWalletFilter);
+      const totalBal = targetWallet ? targetWallet.balance : wallets.reduce((s, w) => s + w.balance, 0);
+      document.getElementById('active-wallet-label').textContent = targetWallet ? `Saldo ${targetWallet.name}` : 'Total Semua Wallet';
+      document.getElementById('balance-display').textContent = balanceHidden ? 'Rp ••••••••' : formatRp(totalBal);
+
+      const scopedTx = transactions.filter(t => activeWalletFilter === 'all' || t.walletId === activeWalletFilter);
+      const inc = 5000000 + scopedTx.filter(t => t.type === 'income').reduce((a, b) => a + b.amount, 0);
+      const exp = 1553000 + scopedTx.filter(t => t.type === 'expense').reduce((a, b) => a + b.amount, 0);
+      document.getElementById('total-income').textContent = '+' + formatRp(inc);
+      document.getElementById('total-expense').textContent = '-' + formatRp(exp);
+    }
+
+    function renderTransactions() {
+      const list = document.getElementById('tx-list');
+      const filtered = transactions.filter(t =>
+        (currentFilter === 'all' || t.type === currentFilter) &&
+        (activeWalletFilter === 'all' || t.walletId === activeWalletFilter)
+      );
+      list.innerHTML = filtered.length ? filtered.map(t => {
+        const w = wallets.find(x => x.id === t.walletId);
+        return `
+          <div class="bg-white surface-card border-2 border-ink rounded-2xl p-3 shadow-brutal-sm flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="w-10 h-10 rounded-xl bg-lemon/40 border-2 border-ink flex items-center justify-center text-lg">${t.cat.split(' ')[0]}</div>
+              <div>
+                <p class="font-bold text-xs">${t.title}</p>
+                <p class="text-[10px] font-semibold muted-text text-slate-500">${w ? w.name : 'Wallet'} • ${t.time}</p>
+              </div>
+            </div>
+            <span class="font-display font-bold text-xs ${t.type === 'income' ? 'text-emerald-600' : 'text-rose-600'}">
+              ${t.type === 'income' ? '+' : '-'}${formatRp(t.amount)}
+            </span>
+          </div>
+        `;
+      }).join('') : `<p class="text-xs text-center text-slate-400 py-4 font-semibold">Belum ada transaksi di wallet ini.</p>`;
+    }
+
+    // ==================== CELENGAN ANIMATION & DREAMS ====================
+    function feedCelengan(amount) {
+      const coin = document.getElementById('falling-coin');
+      const piggy = document.getElementById('piggy-svg');
+      const sparkles = document.getElementById('piggy-sparkles');
+
+      // Reset animations
+      coin.classList.remove('hidden', 'animate-coin-drop');
+      piggy.classList.remove('animate-piggy-bounce');
+      sparkles.classList.add('hidden');
+      void coin.offsetWidth; // trigger reflow
+
+      coin.classList.add('animate-coin-drop');
+
+      setTimeout(() => {
+        piggy.classList.add('animate-piggy-bounce');
+        sparkles.classList.remove('hidden');
+        celenganBalance += amount;
+        document.getElementById('celengan-total').textContent = formatRp(celenganBalance);
+        document.getElementById('celengan-level').textContent = celenganBalance >= 2500000 ? 'Level: Sultan 👑' : 'Level: Gendut ✨';
+        showToast(`Cling! +${formatRp(amount)} masuk celengan 🐷`);
+      }, 480);
+
+      setTimeout(() => {
+        coin.classList.add('hidden');
+        sparkles.classList.add('hidden');
+      }, 1150);
+    }
+
+    function renderDreams() {
+      const list = document.getElementById('dreams-list');
+      list.innerHTML = dreams.map(d => {
+        const pct = Math.min(100, Math.round((d.current / d.target) * 100));
+        return `
+          <div class="bg-white surface-card border-2 border-ink rounded-2xl p-3.5 shadow-brutal-sm space-y-2">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="text-2xl">${d.emoji}</span>
+                <div>
+                  <p class="font-display font-bold text-sm">${d.name}</p>
+                  <p class="text-[11px] font-semibold muted-text text-slate-500">${formatRp(d.current)} / ${formatRp(d.target)}</p>
+                </div>
+              </div>
+              <span class="font-extrabold text-xs bg-lemon border border-ink px-2 py-0.5 rounded-full text-ink">${pct}%</span>
+            </div>
+            <div class="w-full h-3 bg-slate-100 border-2 border-ink rounded-full overflow-hidden">
+              <div class="h-full ${d.color} transition-all duration-300" style="width: ${pct}%"></div>
+            </div>
+            <button onclick="boostDream(${d.id})" class="tactile w-full bg-lemon/60 text-ink border-2 border-ink rounded-xl py-1.5 text-xs font-extrabold">
+              + Nabung Cepat Rp 100.000
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function boostDream(id) {
+      const dream = dreams.find(d => d.id === id);
+      if (dream) {
+        dream.current = Math.min(dream.target, dream.current + 100000);
+        renderDreams();
+        showToast('+Rp 100rb masuk ke ' + dream.name + '! 🎉');
+      }
+    }
+
+    function addNewDream() {
+      const name = prompt('Mau nabung buat apa nih, Bestie?');
+      if (!name) return;
+      dreams.unshift({ id: Date.now(), name, emoji: '🎯', current: 250000, target: 2000000, color: 'bg-lavender' });
+      renderDreams();
+      showToast('Dream baru ditambahkan! ✨');
+    }
+
+    // ==================== INVESTASI EMAS (REALTIME & MANUAL) ====================
+    function setGoldMode(mode) {
+      goldMode = mode;
+      document.getElementById('gold-mode-rt').className = `px-2 py-0.5 rounded-lg ${mode === 'realtime' ? 'bg-ink text-white' : ''}`;
+      document.getElementById('gold-mode-manual').className = `px-2 py-0.5 rounded-lg ${mode === 'manual' ? 'bg-ink text-white' : ''}`;
+      document.getElementById('gold-manual-box').classList.toggle('hidden', mode !== 'manual');
+      if (mode === 'realtime') fetchRealtimeGold();
+    }
+
+    async function fetchRealtimeGold() {
+      const status = document.getElementById('gold-source-status');
+      const btn = document.getElementById('btn-sync-gold');
+      btn.textContent = '⏳ Sync...';
+      status.textContent = '● Mengambil harga emas dunia & kurs IDR...';
+
+      try {
+        const [goldRes, fxRes] = await Promise.all([
+          fetch('https://api.gold-api.com/price/XAU'),
+          fetch('https://open.er-api.com/v6/latest/USD')
+        ]);
+        if (!goldRes.ok || !fxRes.ok) throw new Error('API unavailable');
+        const goldData = await goldRes.json();
+        const fxData = await fxRes.json();
+
+        const usdPerOz = goldData.price; // troy ounce = 31.1035 gram
+        const idrPerUsd = fxData.rates.IDR;
+        if (usdPerOz && idrPerUsd) {
+          goldPricePerGram = Math.round((usdPerOz / 31.1035) * idrPerUsd);
+          status.textContent = `● Live Spot (${new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })})`;
+          status.className = 'text-[10px] font-bold text-emerald-700';
+          updateGoldPortfolio();
+          showToast('Harga emas live diperbarui! 🪙');
+        } else {
+          throw new Error('Invalid data');
+        }
+      } catch (e) {
+        status.textContent = '● Offline/CORS fallback — gunakan harga acuan atau Manual';
+        status.className = 'text-[10px] font-bold text-amber-700';
+        showToast('Pakai harga acuan / mode Manual ✏️');
+      } finally {
+        btn.textContent = '⚡ Sync Live';
+      }
+    }
+
+    function applyManualGoldPrice() {
+      const val = parseInt(document.getElementById('manual-gold-input').value, 10);
+      if (!val || val <= 0) return showToast('Masukkan harga/gram yang valid!');
+      goldPricePerGram = val;
+      document.getElementById('gold-source-status').textContent = '● Harga input manual';
+      updateGoldPortfolio();
+      showToast('Harga emas manual diterapkan! ✏️');
+    }
+
+    function updateGoldPortfolio() {
+      const currentVal = goldTotalGrams * goldPricePerGram;
+      const pnl = currentVal - goldTotalCost;
+      const pnlPct = ((pnl / goldTotalCost) * 100).toFixed(1);
+
+      document.getElementById('gold-price-display').textContent = formatRp(goldPricePerGram);
+      document.getElementById('gold-grams-total').textContent = goldTotalGrams.toFixed(3) + ' gram';
+      document.getElementById('gold-value-total').textContent = formatRp(currentVal);
+
+      const pnlEl = document.getElementById('gold-pnl');
+      const sign = pnl >= 0 ? '+' : '';
+      pnlEl.textContent = `${sign}${formatRp(pnl)} (${sign}${pnlPct}%) ${pnl >= 0 ? '📈' : '📉'}`;
+      pnlEl.className = `font-extrabold ${pnl >= 0 ? 'text-emerald-700' : 'text-rose-600'}`;
+    }
+
+    function syncGoldBuy(source) {
+      const rpEl = document.getElementById('buy-gold-rp');
+      const grEl = document.getElementById('buy-gold-gr');
+      if (source === 'rp') {
+        const rp = parseFloat(rpEl.value) || 0;
+        grEl.value = rp ? (rp / goldPricePerGram).toFixed(3) : '';
+      } else {
+        const gr = parseFloat(grEl.value) || 0;
+        rpEl.value = gr ? Math.round(gr * goldPricePerGram) : '';
+      }
+    }
+
+    function buyGold() {
+      const rp = parseFloat(document.getElementById('buy-gold-rp').value) || 0;
+      const gr = parseFloat(document.getElementById('buy-gold-gr').value) || 0;
+      if (rp <= 0 || gr <= 0) return showToast('Isi nominal atau gramasi dulu!');
+      goldTotalGrams += gr;
+      goldTotalCost += rp;
+      document.getElementById('buy-gold-rp').value = '';
+      document.getElementById('buy-gold-gr').value = '';
+      updateGoldPortfolio();
+      showToast(`Berhasil catat +${gr.toFixed(3)} gr emas! 🪙`);
+    }
+
+    // ==================== CHALLENGES, TABS, SCAN, THEME ====================
+    function renderChallenges() {
+      const list = document.getElementById('challenge-list');
+      list.innerHTML = challenges.map(c => `
+        <div class="bg-white surface-card border-2 border-ink rounded-2xl p-3 shadow-brutal-sm flex items-center justify-between gap-2">
+          <div>
+            <p class="font-bold text-xs ${c.done ? 'line-through opacity-60' : ''}">${c.title}</p>
+            <p class="text-[10px] font-bold text-indigo-600">${c.reward} • ${c.progress}</p>
+          </div>
+          <button onclick="completeChallenge(${c.id})" ${c.done ? 'disabled' : ''} class="tactile px-3 py-1.5 rounded-xl border-2 border-ink text-xs font-extrabold ${c.done ? 'bg-slate-200 opacity-60' : 'bg-lemon text-ink'}">
+            ${c.done ? 'Selesai ✅' : 'Klaim'}
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function completeChallenge(id) {
+      const c = challenges.find(x => x.id === id);
+      if (c && !c.done) {
+        c.done = true;
+        c.progress = 'Selesai';
+        xp = Math.min(500, xp + 40);
+        document.getElementById('xp-text').textContent = `${xp} / 500 XP`;
+        document.getElementById('xp-bar').style.width = `${(xp / 500) * 100}%`;
+        renderChallenges();
+        showToast('Misi selesai! XP bertambah 🏆');
+      }
+    }
+
+    function switchTab(tab) {
+      ['home', 'savings', 'gold', 'challenge', 'customize'].forEach(t => {
+        document.getElementById('tab-' + t).classList.toggle('hidden', t !== tab);
+      });
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        const active = btn.dataset.tab === tab;
+        btn.classList.toggle('bg-lemon', active);
+        btn.classList.toggle('border-ink', active);
+        btn.classList.toggle('border-transparent', !active);
+        btn.classList.toggle('opacity-70', !active);
+      });
+    }
+
+    function toggleBalance() {
+      balanceHidden = !balanceHidden;
+      document.getElementById('btn-eye').textContent = balanceHidden ? '🙈 Tampil' : '👁️ Sembunyi';
+      renderWallets();
+    }
+
+    function refreshAiInsight() {
+      insightIdx = (insightIdx + 1) % aiInsights.length;
+      document.getElementById('ai-insight-text').textContent = aiInsights[insightIdx];
+      showToast('Mucuw kasih saran baru! 🤖');
+    }
+
+    function filterTx(type, el) {
+      currentFilter = type;
+      document.querySelectorAll('.tx-filter').forEach(b => {
+        b.classList.remove('bg-ink', 'text-white');
+        b.classList.add('bg-white', 'text-ink');
+      });
+      el.classList.add('bg-ink', 'text-white');
+      el.classList.remove('bg-white', 'text-ink');
+      renderTransactions();
+    }
+
+    function setTheme(theme) {
+      const shell = document.getElementById('phone-shell');
+      shell.classList.remove('theme-dark');
+      const map = { cream: '#FFFDF6', matcha: '#ECFDF5', lavender: '#F5F3FF', dark: '#18142C' };
+      document.documentElement.style.setProperty('--app-bg', map[theme]);
+      if (theme === 'dark') shell.classList.add('theme-dark');
+      showToast('Tema diganti ke ' + theme + '! 🎨');
+    }
+
+    function openScanModal() { document.getElementById('scan-modal').classList.remove('hidden'); }
+    function closeScanModal() { document.getElementById('scan-modal').classList.add('hidden'); }
+
+    function setFormType(type) {
+      formType = type;
+      document.getElementById('type-expense').className = `py-1.5 text-xs font-extrabold rounded-xl border-2 border-ink ${type === 'expense' ? 'bg-coral/40' : 'bg-white'}`;
+      document.getElementById('type-income').className = `py-1.5 text-xs font-extrabold rounded-xl border-2 border-ink ${type === 'income' ? 'bg-mint/50' : 'bg-white'}`;
+    }
+
+    function simulateScan(title, amount, cat, walletId) {
+      const beam = document.getElementById('scan-beam');
+      const status = document.getElementById('scan-status');
+      beam.classList.remove('hidden');
+      status.textContent = '🤖 AI sedang membaca nominal & merchant...';
+
+      setTimeout(() => {
+        beam.classList.add('hidden');
+        status.textContent = `✅ Terdeteksi: ${title}`;
+        setFormType('expense');
+        document.getElementById('input-title').value = title;
+        document.getElementById('input-amount').value = amount;
+        document.getElementById('input-cat').value = cat;
+        document.getElementById('input-wallet').value = walletId;
+      }, 850);
+    }
+
+    function saveTransaction() {
+      const title = document.getElementById('input-title').value.trim();
+      const amount = parseInt(document.getElementById('input-amount').value, 10);
+      const cat = document.getElementById('input-cat').value;
+      const walletId = document.getElementById('input-wallet').value;
+      if (!title || !amount || amount <= 0) return showToast('Isi nama & nominal dulu ya!');
+
+      const w = wallets.find(x => x.id === walletId);
+      if (w) {
+        w.balance += (formType === 'income' ? amount : -amount);
+      }
+      transactions.unshift({ id: Date.now(), title, cat, walletId, amount, type: formType, time: 'Baru saja' });
+      document.getElementById('input-title').value = '';
+      document.getElementById('input-amount').value = '';
+      closeScanModal();
+      switchTab('home');
+      renderWallets();
+      renderTransactions();
+      showToast('Transaksi dicatat ke ' + (w ? w.name : 'Wallet') + '! ✅');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 2200);
+    }
+
+    // Init
+    renderWallets();
+    renderTransactions();
+    renderDreams();
+    renderChallenges();
+    updateGoldPortfolio();
+  </script>
+</body>
+</html>

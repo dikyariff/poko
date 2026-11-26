@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlobbyStudio — Playful & Colorful Web Design</title>
+
+  <!-- Google Fonts: Fredoka (Display) & Plus Jakarta Sans (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Fredoka', 'sans-serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            cream: '#FFFDF5',
+            ink: '#1E1B4B',
+            lemon: '#FDE047',
+            bubblegum: '#F472B6',
+            mint: '#34D399',
+            sky: '#38BDF8',
+            lavender: '#A78BFA',
+            coral: '#FB7185',
+          },
+          boxShadow: {
+            brutal: '4px 4px 0px #1E1B4B',
+            'brutal-lg': '8px 8px 0px #1E1B4B',
+            'brutal-sm': '2px 2px 0px #1E1B4B',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* Playful dot grid background */
+    .bg-dots {
+      background-color: #FFFDF5;
+      background-image: radial-gradient(#CBD5E1 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+    }
+
+    /* Tactile button press effect */
+    .btn-tactile {
+      transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s ease;
+    }
+    .btn-tactile:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px #1E1B4B;
+    }
+    .btn-tactile:active {
+      transform: translate(3px, 3px);
+      box-shadow: 1px 1px 0px #1E1B4B;
+    }
+
+    /* Bouncy avatar hover */
+    .blob-bounce {
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .blob-bounce:hover {
+      transform: scale(1.08) rotate(-3deg);
+    }
+
+    /* Floating animation */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(2deg); }
+    }
+    .animate-float {
+      animation: floatSlow 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="bg-dots text-ink font-sans antialiased selection:bg-lemon selection:text-ink">
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 px-4 pt-4">
+    <nav class="max-w-6xl mx-auto bg-white border-[3px] border-ink rounded-2xl shadow-brutal px-5 py-3 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3 group">
+        <div id="nav-logo-blob" class="w-10 h-10 rounded-xl border-2 border-ink overflow-hidden shadow-brutal-sm group-hover:rotate-6 transition-transform"></div>
+        <span class="font-display font-bold text-2xl tracking-tight">Blobby<span class="text-bubblegum">Studio</span></span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-7 font-bold text-sm">
+        <a href="#playground" class="hover:text-lavender transition-colors">Playground</a>
+        <a href="#features" class="hover:text-mint transition-colors">Fitur</a>
+        <a href="#community" class="hover:text-bubblegum transition-colors">Komunitas</a>
+      </div>
+
+      <a href="#playground" class="btn-tactile bg-lemon border-[2.5px] border-ink rounded-xl px-4 py-2 font-bold text-sm shadow-brutal">
+        Coba Sekarang ✨
+      </a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="max-w-6xl mx-auto px-4 pt-12 pb-20">
+    <section id="playground" class="grid lg:grid-cols-12 gap-10 items-center">
+      <!-- Left Copy -->
+      <div class="lg:col-span-7 space-y-6">
+        <div class="inline-flex items-center gap-2 bg-mint/30 border-2 border-ink rounded-full px-4 py-1.5 font-bold text-xs uppercase tracking-wider shadow-brutal-sm">
+          <span class="w-2.5 h-2.5 rounded-full bg-mint border border-ink animate-ping"></span>
+          Playful Neo-Brutalism + Blobatar
+        </div>
+
+        <h1 class="font-display font-bold text-5xl sm:text-6xl leading-[1.08] tracking-tight">
+          Bikin Aplikasi Lebih
+          <span class="inline-block bg-lemon border-[3px] border-ink rounded-2xl px-3 py-0.5 -rotate-1 shadow-brutal">Hidup</span>
+          &amp;
+          <span class="inline-block bg-bubblegum text-white border-[3px] border-ink rounded-2xl px-3 py-0.5 rotate-1 shadow-brutal">Colorful!</span>
+        </h1>
+
+        <p class="text-lg sm:text-xl text-ink/80 font-medium max-w-xl leading-relaxed">
+          Perpaduan gaya <strong class="text-ink underline decoration-wavy decoration-lavender">Soft Neo-Brutalism</strong> dengan avatar SVG deterministik dari <strong>Blobatar</strong>. Ringan, ekspresif, dan selalu konsisten untuk setiap pengguna.
+        </p>
+
+        <div class="flex flex-wrap gap-4 pt-2">
+          <button id="random-btn" class="btn-tactile bg-lavender text-white border-[3px] border-ink rounded-2xl px-6 py-3.5 font-display font-bold text-lg shadow-brutal flex items-center gap-2">
+            🎲 Acak Karakter
+          </button>
+          <a href="#community" class="btn-tactile bg-white border-[3px] border-ink rounded-2xl px-6 py-3.5 font-display font-bold text-lg shadow-brutal">
+            Lihat Galeri →
+          </a>
+        </div>
+
+        <!-- Mini Avatar Stack -->
+        <div class="flex items-center gap-4 pt-3">
+          <div id="mini-stack" class="flex -space-x-3"></div>
+          <p class="text-sm font-bold text-ink/70">
+            <span class="text-ink">100% Deterministik</span> — teks sama = avatar sama!
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Interactive Blobatar Card -->
+      <div class="lg:col-span-5">
+        <div class="bg-sky/25 border-[3px] border-ink rounded-3xl p-6 sm:p-8 shadow-brutal-lg relative">
+          <!-- Decorative floating pill -->
+          <div class="absolute -top-4 -right-3 bg-lemon border-[2.5px] border-ink rounded-full px-3.5 py-1 font-display font-bold text-xs shadow-brutal-sm rotate-6">
+            Live Generator ⚡
+          </div>
+
+          <!-- Avatar Display -->
+          <div class="bg-white border-[3px] border-ink rounded-2xl p-6 flex flex-col items-center justify-center shadow-brutal mb-5">
+            <div id="hero-blob" class="w-44 h-44 blob-bounce animate-float"></div>
+            <span id="hero-label" class="mt-3 font-display font-bold text-lg bg-cream border-2 border-ink rounded-full px-4 py-0.5">
+              telkomsel-dev
+            </span>
+          </div>
+
+          <!-- Input Seed -->
+          <div class="space-y-3">
+            <label for="seed-input" class="block text-xs font-extrabold uppercase tracking-wider text-ink/80">
+              Ketik Nama / Email / ID:
+            </label>
+            <input
+              id="seed-input"
+              type="text"
+              value="telkomsel-dev"
+              placeholder="misal: budi@example.com"
+              class="w-full bg-white border-[2.5px] border-ink rounded-xl px-4 py-2.5 font-bold text-sm shadow-brutal-sm focus:outline-none focus:ring-4 focus:ring-lemon/60"
+            />
+
+            <!-- Expression Picker -->
+            <div class="pt-1">
+              <span class="block text-xs font-extrabold uppercase tracking-wider text-ink/80 mb-2">
+                Pilih Ekspresi:
+              </span>
+              <div id="expr-buttons" class="flex flex-wrap gap-2">
+                <button data-expr="idle" class="expr-btn btn-tactile bg-lemon border-2 border-ink rounded-xl px-3 py-1.5 text-xs font-bold shadow-brutal-sm">😐 Idle</button>
+                <button data-expr="happy" class="expr-btn btn-tactile bg-white border-2 border-ink rounded-xl px-3 py-1.5 text-xs font-bold shadow-brutal-sm">😄 Happy</button>
+                <button data-expr="love" class="expr-btn btn-tactile bg-white border-2 border-ink rounded-xl px-3 py-1.5 text-xs font-bold shadow-brutal-sm">😍 Love</button>
+                <button data-expr="shy" class="expr-btn btn-tactile bg-white border-2 border-ink rounded-xl px-3 py-1.5 text-xs font-bold shadow-brutal-sm">😳 Shy</button>
+                <button data-expr="thinking" class="expr-btn btn-tactile bg-white border-2 border-ink rounded-xl px-3 py-1.5 text-xs font-bold shadow-brutal-sm">🤔 Thinking</button>
+                <button data-expr="sick" class="expr-btn btn-tactile bg-white border-2 border-ink rounded-xl px-3 py-1.5 text-xs font-bold shadow-brutal-sm">🤢 Sick</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="mt-24">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="inline-block bg-lavender/30 border-2 border-ink rounded-full px-4 py-1 font-bold text-xs uppercase tracking-wider mb-3">
+          Kenapa Tema Ini Cocok?
+        </span>
+        <h2 class="font-display font-bold text-3xl sm:text-4xl">
+          Elemen Utama Desain Playful
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-lemon/40 border-[3px] border-ink rounded-3xl p-6 shadow-brutal hover:-translate-y-1 transition-transform">
+          <div class="w-12 h-12 bg-lemon border-[2.5px] border-ink rounded-2xl flex items-center justify-center text-2xl shadow-brutal-sm mb-4">
+            🎨
+          </div>
+          <h3 class="font-display font-bold text-xl mb-2">Palet Warna Dopamine</h3>
+          <p class="text-sm font-medium text-ink/80 leading-relaxed">
+            Menggunakan warna cerah seperti lemon, bubblegum, mint, dan sky di atas latar krem hangat agar mata tetap nyaman.
+          </p>
+        </div>
+
+        <div class="bg-mint/30 border-[3px] border-ink rounded-3xl p-6 shadow-brutal hover:-translate-y-1 transition-transform">
+          <div class="w-12 h-12 bg-mint border-[2.5px] border-ink rounded-2xl flex items-center justify-center text-2xl shadow-brutal-sm mb-4">
+            🧱
+          </div>
+          <h3 class="font-display font-bold text-xl mb-2">Tactile Borders &amp; Shadows</h3>
+          <p class="text-sm font-medium text-ink/80 leading-relaxed">
+            Garis tepi gelap yang tegas dipadukan dengan bayangan solid dan sudut membulat memberi efek kartu yang terasa "nyata".
+          </p>
+        </div>
+
+        <div class="bg-bubblegum/25 border-[3px] border-ink rounded-3xl p-6 shadow-brutal hover:-translate-y-1 transition-transform">
+          <div class="w-12 h-12 bg-bubblegum text-white border-[2.5px] border-ink rounded-2xl flex items-center justify-center text-2xl shadow-brutal-sm mb-4">
+            🫧
+          </div>
+          <h3 class="font-display font-bold text-xl mb-2">Avatar Deterministik</h3>
+          <p class="text-sm font-medium text-ink/80 leading-relaxed">
+            Setiap user langsung punya karakter unik tanpa perlu upload foto atau menyimpan file gambar di server.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Community / Gallery Grid -->
+    <section id="community" class="mt-24">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+        <div>
+          <span class="inline-block bg-sky/30 border-2 border-ink rounded-full px-4 py-1 font-bold text-xs uppercase tracking-wider mb-2">
+            Galeri Karakter
+          </span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl">
+            Tim &amp; Komunitas Blobby
+          </h2>
+        </div>
+        <p class="text-sm font-bold text-ink/70">
+          Klik kartu mana saja untuk memuatnya ke playground!
+        </p>
+      </div>
+
+      <div id="community-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5"></div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t-[3px] border-ink bg-white py-8 px-4">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="font-display font-bold text-lg">
+        Blobby<span class="text-bubblegum">Studio</span> • Dibuat dengan Tailwind CDN &amp; Blobatar
+      </p>
+      <p class="text-xs font-bold text-ink/60">
+        Soft Neo-Brutalism Theme Demo
+      </p>
+    </div>
+  </footer>
+
+  <!-- Blobatar ES Module via jsDelivr -->
+  <script type="module">
+    import { blobatar } from 'https://cdn.jsdelivr.net/npm/blobatar@2.7.0/+esm';
+    import { idle, happy, love, shy, thinking, sick } from 'https://cdn.jsdelivr.net/npm/blobatar@2.7.0/expression/+esm';
+
+    const expressions = { idle, happy, love, shy, thinking, sick };
+    let currentExpr = 'idle';
+
+    const seedInput = document.getElementById('seed-input');
+    const heroBlob = document.getElementById('hero-blob');
+    const heroLabel = document.getElementById('hero-label');
+    const navLogoBlob = document.getElementById('nav-logo-blob');
+    const miniStack = document.getElementById('mini-stack');
+    const communityGrid = document.getElementById('community-grid');
+    const randomBtn = document.getElementById('random-btn');
+    const exprButtons = document.querySelectorAll('.expr-btn');
+
+    // Render Navbar Logo
+    navLogoBlob.innerHTML = blobatar('BlobbyStudio', { background: 'square', expression: happy });
+
+    // Render Mini Avatar Stack
+    ['andi', 'sinta', 'raka', 'maya'].forEach((name) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'w-10 h-10 rounded-full border-2 border-ink overflow-hidden shadow-brutal-sm bg-white';
+      wrap.innerHTML = blobatar(name, { background: 'circle' });
+      miniStack.appendChild(wrap);
+    });
+
+    // Update Hero Blobatar
+    function renderHero() {
+      const seed = seedInput.value.trim() || 'blobby';
+      heroBlob.innerHTML = blobatar(seed, {
+        background: 'squircle',
+        expression: expressions[currentExpr],
+      });
+      heroLabel.textContent = seed;
+    }
+
+    // Input listener
+    seedInput.addEventListener('input', renderHero);
+
+    // Expression button listeners
+    exprButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        currentExpr = btn.dataset.expr;
+        exprButtons.forEach((b) => {
+          b.classList.remove('bg-lemon');
+          b.classList.add('bg-white');
+        });
+        btn.classList.remove('bg-white');
+        btn.classList.add('bg-lemon');
+        renderHero();
+      });
+    });
+
+    // Randomize button
+    const randomNames = [
+      'pixel-panda', 'kopi-susu', 'nusa-dua', 'astro-cat',
+      'jelly-bean', 'koding-seru', 'neon-mochi', 'boba-tea',
+      'cosmic-kiwi', 'sunny-cloud'
+    ];
+    randomBtn.addEventListener('click', () => {
+      const pick = randomNames[Math.floor(Math.random() * randomNames.length)] + '-' + Math.floor(Math.random() * 99);
+      seedInput.value = pick;
+      renderHero();
+    });
+
+    // Render Community Cards
+    const members = [
+      { name: 'Aldi', role: 'UI Designer', bg: 'bg-lemon/40', expr: happy },
+      { name: 'Nadia', role: 'Frontend Dev', bg: 'bg-bubblegum/25', expr: love },
+      { name: 'Rizky', role: 'Product Lead', bg: 'bg-mint/30', expr: thinking },
+      { name: 'Tari', role: 'Illustrator', bg: 'bg-sky/30', expr: shy },
+      { name: 'Bagas', role: 'Backend Dev', bg: 'bg-lavender/30', expr: idle },
+      { name: 'Citra', role: 'QA Engineer', bg: 'bg-coral/25', expr: happy },
+    ];
+
+    members.forEach((m) => {
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = `btn-tactile ${m.bg} border-[3px] border-ink rounded-2xl p-4 shadow-brutal text-center flex flex-col items-center cursor-pointer`;
+      card.innerHTML = `
+        <div class="w-20 h-20 mb-3 blob-bounce">${blobatar(m.name, { background: 'squircle', expression: m.expr })}</div>
+        <div class="font-display font-bold text-base">${m.name}</div>
+        <div class="text-xs font-bold text-ink/70">${m.role}</div>
+      `;
+      card.addEventListener('click', () => {
+        seedInput.value = m.name;
+        renderHero();
+        document.getElementById('playground').scrollIntoView({ behavior: 'smooth' });
+      });
+      communityGrid.appendChild(card);
+    });
+
+    // Initial render
+    renderHero();
+  </script>
+</body>
+</html>

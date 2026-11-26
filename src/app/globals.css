@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+:root {
+  --bg-canvas: #fffdf5;
+  --bg-subtle: #faf6ec;
+  --bg-card: #ffffff;
+  --ink: #111111;
+  --ink-muted: #4a4a52;
+  --ink-soft: #64646e;
+
+  --lime: #c8ff3d;
+  --yellow: #ffe14d;
+  --coral: #ff6b8b;
+  --cyan: #5ce1ff;
+  --lavender: #d6b8ff;
+  --peach: #ffb87a;
+
+  --text-income: #0c753b;
+  --text-expense: #c51d44;
+  --text-transfer: #0369a1;
+}
+
+@theme inline {
+  --color-canvas: var(--bg-canvas);
+  --color-subtle: var(--bg-subtle);
+  --color-card: var(--bg-card);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-soft: var(--ink-soft);
+
+  --color-lime: var(--lime);
+  --color-yellow: var(--yellow);
+  --color-coral: var(--coral);
+  --color-cyan: var(--cyan);
+  --color-lavender: var(--lavender);
+  --color-peach: var(--peach);
+
+  --color-income: var(--text-income);
+  --color-expense: var(--text-expense);
+  --color-transfer: var(--text-transfer);
+
+  --font-display: var(--font-space-grotesk), system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-plus-jakarta-sans), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+
+  --shadow-brutal-sm: 2.5px 2.5px 0px #111111;
+  --shadow-brutal-md: 4px 4px 0px #111111;
+  --shadow-brutal-lg: 6px 6px 0px #111111;
+}
+
+body {
+  background-color: var(--bg-canvas);
+  background-image: radial-gradient(rgba(17, 17, 17, 0.08) 1.25px, transparent 1.25px);
+  background-size: 24px 24px;
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
