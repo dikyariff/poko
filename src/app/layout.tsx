@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
+
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -39,7 +41,10 @@ export default function RootLayout({
       lang="id"
       className={`${spaceGrotesk.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="bg-canvas text-ink flex min-h-full flex-col font-sans">{children}</body>
+      <body className="bg-canvas text-ink flex min-h-full flex-col font-sans">
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }

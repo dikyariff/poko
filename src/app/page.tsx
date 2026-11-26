@@ -1,3 +1,4 @@
+import { DesignSystemShowcase } from "@/components/showcase/design-system-showcase";
 import { cn, formatIDR } from "@/lib/utils";
 
 const ledgerSamples = [
@@ -39,14 +40,14 @@ const paletteTokens = [
 
 export default function HomePage() {
   return (
-    <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col justify-center gap-8 px-5 py-12 sm:px-8">
+    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-10 px-4 py-10 sm:px-8 sm:py-12">
       <header className="border-ink bg-card shadow-brutal-lg rounded-3xl border-[2.5px] p-6 sm:p-8">
         <div className="mb-4 flex flex-wrap items-center gap-2.5">
           <span className="border-ink bg-lime shadow-brutal-sm inline-flex items-center rounded-full border-2 px-3 py-1 font-mono text-xs font-bold tracking-wide uppercase">
-            Phase 1 · Foundation
+            Phase 1 · Design System
           </span>
           <span className="border-ink bg-subtle inline-flex items-center rounded-full border-2 px-3 py-1 font-mono text-xs font-semibold">
-            Next.js App Router + TypeScript + Tailwind CSS
+            Next.js 16 + Tailwind v4 + shadcn/ui
           </span>
         </div>
 
@@ -54,13 +55,17 @@ export default function HomePage() {
           Poko — Kantong rapi, impian pasti
         </h1>
         <p className="text-ink-muted mt-3 max-w-2xl text-base leading-relaxed sm:text-lg">
-          Fondasi Warm-Paper Neo-Brutalism telah siap. Halaman smoke-test ini memverifikasi tiga
-          tipografi utama Poko serta penyelarasan angka tabular Rupiah sebelum fitur inti dibangun.
+          Fondasi Warm-Paper Neo-Brutalism telah terhubung penuh dengan 11 komponen shadcn/ui,
+          design token berkontras WCAG AA, dan{" "}
+          <code className="font-mono font-bold">ResponsiveModal</code> (Dialog di desktop, Vaul
+          Drawer di mobile).
         </p>
       </header>
 
+      <DesignSystemShowcase />
+
       <section className="grid gap-5 md:grid-cols-2" aria-label="Pratinjau Tipografi Poko">
-        <article className="border-ink bg-card shadow-brutal-md rounded-2xl border-[2.5px] p-6">
+        <article className="border-ink bg-card shadow-brutal rounded-2xl border-[2.5px] p-6">
           <div className="mb-3 flex items-center justify-between gap-2">
             <span className="border-ink bg-yellow rounded-lg border-2 px-2.5 py-0.5 font-mono text-xs font-bold">
               --font-space-grotesk
@@ -75,7 +80,7 @@ export default function HomePage() {
           </p>
         </article>
 
-        <article className="border-ink bg-card shadow-brutal-md rounded-2xl border-[2.5px] p-6">
+        <article className="border-ink bg-card shadow-brutal rounded-2xl border-[2.5px] p-6">
           <div className="mb-3 flex items-center justify-between gap-2">
             <span className="border-ink bg-lavender rounded-lg border-2 px-2.5 py-0.5 font-mono text-xs font-bold">
               --font-plus-jakarta-sans
@@ -92,7 +97,7 @@ export default function HomePage() {
       </section>
 
       <section
-        className="border-ink bg-card shadow-brutal-md rounded-2xl border-[2.5px] p-6"
+        className="border-ink bg-card shadow-brutal rounded-2xl border-[2.5px] p-6"
         aria-label="Pratinjau Angka Tabular IDR"
       >
         <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
