@@ -271,10 +271,90 @@
   animation: poko-stripe-glide 2.2s linear infinite;
 }
 
+/* Blobatar Alive Micro-Animations (breathe, periodic blink, interactive hover) */
+@keyframes poko-blobatar-breathe {
+  0%,
+  100% {
+    transform: translateY(0) scale(1, 1);
+  }
+  50% {
+    transform: translateY(-2px) scale(1.025, 0.975);
+  }
+}
+
+@keyframes poko-blobatar-blink {
+  0%,
+  91%,
+  100% {
+    transform: scaleY(1);
+  }
+  94%,
+  96% {
+    transform: scaleY(0.08);
+  }
+}
+
+@keyframes poko-blobatar-hover-blink {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  45%,
+  55% {
+    transform: scaleY(0.1);
+  }
+}
+
+.poko-blobatar-body {
+  transform-box: fill-box;
+  transform-origin: 50% 82%;
+  transition: transform 0.26s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.poko-blobatar-body.poko-blobatar-idle {
+  animation: poko-blobatar-breathe 3.6s ease-in-out infinite;
+}
+
+.poko-blobatar-eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.poko-blobatar-eyes.poko-blobatar-blink {
+  animation: poko-blobatar-blink 4.8s ease-in-out infinite;
+}
+
+.poko-blobatar-pupils {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 110ms ease-out;
+}
+
+.poko-blobatar-interactive:hover .poko-blobatar-body {
+  animation: none;
+  transform: scale(1.07, 0.94) translateY(-2px) rotate(-2.5deg);
+}
+
+.poko-blobatar-interactive:active .poko-blobatar-body {
+  animation: none;
+  transform: scale(1.1, 0.88) translateY(2px);
+}
+
+.poko-blobatar-interactive:hover .poko-blobatar-eyes {
+  animation: poko-blobatar-hover-blink 0.36s ease;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .poko-progress-stripes,
-  .poko-blob-float {
+  .poko-blob-float,
+  .poko-blobatar-body.poko-blobatar-idle,
+  .poko-blobatar-eyes.poko-blobatar-blink,
+  .poko-blobatar-interactive:hover .poko-blobatar-eyes {
     animation: none;
+  }
+
+  .poko-blobatar-pupils {
+    transition: none;
   }
 }
 

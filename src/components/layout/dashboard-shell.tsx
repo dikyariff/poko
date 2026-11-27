@@ -7,6 +7,7 @@ import { BlobatarStudioModal } from "@/components/layout/blobatar-studio-modal";
 import { MobileBottomNav } from "@/components/layout/mobile-bottom-nav";
 import { TopHeader } from "@/components/layout/top-header";
 import type { DashboardUserProfile } from "@/components/layout/types";
+import { extractFirstName, type BlobatarProfileRecord } from "@/lib/blobatar";
 
 export interface DashboardShellProps {
   user: DashboardUserProfile;
@@ -15,6 +16,38 @@ export interface DashboardShellProps {
 
 export function DashboardShell({ user, children }: DashboardShellProps) {
   const [blobatarOpen, setBlobatarOpen] = useState(false);
+
+  const serverProfileKey = [
+    user.id,
+    user.displayName,
+    user.handle,
+    user.blobatarSeed,
+    user.blobatarFrame,
+  ].join("|");
+
+  const [savedOverride, setSavedOverride] = useState<{
+    baseKey: string;
+    profile: DashboardUserProfile;
+  } | null>(null);
+
+  const activeUser =
+    savedOverride && savedOverride.baseKey === serverProfileKey ? savedOverride.profile : user;
+
+  function handleProfileSaved(saved: BlobatarProfileRecord) {
+    setSavedOverride({
+      baseKey: serverProfileKey,
+      profile: {
+        ...activeUser,
+        displayName: saved.display_name,
+        firstName: extractFirstName(saved.display_name),
+        handle: saved.handle,
+        blobatarSeed: saved.blobatar_seed,
+        blobatarFrame: saved.blobatar_frame,
+        privacyMode: saved.privacy_mode,
+        profilePersisted: true,
+      },
+    });
+  }
 
   return (
     <div className="flex min-h-screen w-full">
@@ -25,10 +58,10 @@ export function DashboardShell({ user, children }: DashboardShellProps) {
         Langsung ke konten utama
       </a>
 
-      <AppSidebar user={user} onOpenBlobatarStudio={() => setBlobatarOpen(true)} />
+      <AppSidebar user={activeUser} onOpenBlobatarStudio={() => setBlobatarOpen(true)} />
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <TopHeader user={user} onOpenBlobatarStudio={() => setBlobatarOpen(true)} />
+        <TopHeader user={activeUser} onOpenBlobatarStudio={() => setBlobatarOpen(true)} />
 
         <main
           id="main-content"
@@ -41,7 +74,12 @@ export function DashboardShell({ user, children }: DashboardShellProps) {
 
       <MobileBottomNav />
 
-      <BlobatarStudioModal open={blobatarOpen} onOpenChange={setBlobatarOpen} user={user} />
+      <BlobatarStudioModal
+        open={blobatarOpen}
+        onOpenChange={setBlobatarOpen}
+        user={activeUser}
+        onProfileSaved={handleProfileSaved}
+      />
     </div>
   );
 }

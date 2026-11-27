@@ -4,7 +4,7 @@ import { Plus } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { toast } from "sonner";
 
-import { MiniBlobatar } from "@/components/layout/mini-blobatar";
+import { BlobatarAvatar } from "@/components/blobatar/blobatar-avatar";
 import { getActiveRouteMeta } from "@/components/layout/nav-config";
 import type { DashboardUserProfile } from "@/components/layout/types";
 import { Button } from "@/components/ui/button";
@@ -44,9 +44,18 @@ export function TopHeader({ user, onOpenBlobatarStudio }: TopHeaderProps) {
             type="button"
             onClick={onOpenBlobatarStudio}
             aria-label="Buka Blobatar Studio"
-            className="border-ink bg-yellow shadow-brutal-sm flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-[14px] border-[2.5px] p-1 transition-[transform,box-shadow] duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#111111] active:translate-x-[1.5px] active:translate-y-[1.5px] active:shadow-none lg:hidden"
+            className="inline-flex shrink-0 cursor-pointer items-center justify-center rounded-2xl transition-transform duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-[1px] active:translate-y-[1px] lg:hidden"
           >
-            <MiniBlobatar seed={user.avatarSeed} className="size-9" />
+            <BlobatarAvatar
+              seed={user.blobatarSeed}
+              frame={user.blobatarFrame}
+              size="sm"
+              trackCursor
+              animateIdle
+              interactive
+              className="bg-yellow/75"
+              ariaLabel={`Blobatar ${user.displayName}`}
+            />
           </button>
 
           <div className="min-w-0 flex-1">

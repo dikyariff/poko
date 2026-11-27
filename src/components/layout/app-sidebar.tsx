@@ -1,13 +1,12 @@
 "use client";
 
-import { SignOutButton, UserButton } from "@clerk/nextjs";
+import { SignOutButton } from "@clerk/nextjs";
 import { LogOut, Pencil } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { MiniBlobatar } from "@/components/layout/mini-blobatar";
+import { BlobatarAvatar } from "@/components/blobatar/blobatar-avatar";
 import { DASHBOARD_NAV_ITEMS, isNavItemActive } from "@/components/layout/nav-config";
-import { PrivacyToggleButton } from "@/components/layout/privacy-toggle-button";
 import type { DashboardUserProfile } from "@/components/layout/types";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -49,46 +48,36 @@ export function AppSidebar({ user, onOpenBlobatarStudio }: AppSidebarProps) {
         </div>
       </Link>
 
-      {/* Profile Card (Blobatar Studio trigger + Clerk controls) */}
-      <div className="border-ink bg-subtle shadow-brutal-sm flex flex-col gap-2.5 rounded-2xl border-[2.5px] p-2.5">
-        <button
-          type="button"
-          onClick={onOpenBlobatarStudio}
-          aria-label="Buka Blobatar Studio untuk melihat profil dan pengaturan privasi"
-          className="border-ink bg-card hover:bg-yellow flex min-h-14 w-full cursor-pointer items-center gap-3 rounded-xl border-2 px-2.5 py-2 text-left transition-[transform,box-shadow,background-color] duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#111111] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
-        >
-          <span className="border-ink bg-yellow/60 flex size-11 shrink-0 items-center justify-center rounded-xl border-2 p-1">
-            <MiniBlobatar seed={user.avatarSeed} className="size-9" />
+      {/* Profile Card (Langsung pakai Blobatar, tanpa foto profil Google/Clerk UserButton) */}
+      <button
+        type="button"
+        onClick={onOpenBlobatarStudio}
+        aria-label="Buka Blobatar Studio untuk mengedit profil, bingkai avatar, dan Mode Privasi"
+        className="border-ink bg-subtle hover:bg-yellow shadow-brutal-sm flex min-h-16 w-full cursor-pointer items-center gap-3 rounded-2xl border-[2.5px] px-3 py-2.5 text-left transition-[transform,box-shadow,background-color] duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
+      >
+        <BlobatarAvatar
+          seed={user.blobatarSeed}
+          frame={user.blobatarFrame}
+          size="sm"
+          trackCursor
+          animateIdle
+          interactive
+          className="bg-yellow/45 shadow-none"
+          ariaLabel={`Blobatar ${user.displayName}`}
+        />
+        <span className="min-w-0 flex-1">
+          <span className="font-display text-ink block truncate text-sm leading-tight font-bold">
+            {user.displayName}
           </span>
-          <span className="min-w-0 flex-1">
-            <span
-              translate="no"
-              className="font-display text-ink block truncate text-sm leading-tight font-bold"
-            >
-              @{user.handle}
-            </span>
-            <span className="text-ink-muted mt-0.5 block truncate text-[11px] font-semibold">
-              Blobatar Studio
-            </span>
+          <span
+            translate="no"
+            className="text-ink-muted mt-0.5 block truncate font-mono text-[11px] font-bold"
+          >
+            {user.handle}
           </span>
-          <Pencil className="text-ink size-4 shrink-0" aria-hidden="true" />
-        </button>
-
-        {user.clerkEnabled ? (
-          <div className="flex items-center justify-between gap-2 px-1">
-            <div className="flex min-w-0 items-center gap-2">
-              <UserButton />
-              <span className="text-ink-muted truncate text-xs font-semibold">Akun Clerk</span>
-            </div>
-            <SignOutButton redirectUrl="/">
-              <Button variant="outline" size="sm" className="min-h-9 px-2.5 text-xs">
-                <LogOut className="size-3.5" aria-hidden="true" />
-                Keluar
-              </Button>
-            </SignOutButton>
-          </div>
-        ) : null}
-      </div>
+        </span>
+        <Pencil className="text-ink size-4 shrink-0" aria-hidden="true" />
+      </button>
 
       {/* 5 Active-Aware Navigation Links */}
       <nav aria-label="Menu aplikasi" className="flex flex-col gap-1.5">
@@ -119,18 +108,21 @@ export function AppSidebar({ user, onOpenBlobatarStudio }: AppSidebarProps) {
         })}
       </nav>
 
-      {/* Sidebar Footer: Privacy Toggle #2 */}
-      <div className="border-ink/25 mt-auto flex flex-col gap-3 border-t-2 border-dashed pt-4">
-        <div className="text-ink-muted flex items-center gap-2 px-1 text-xs font-bold">
-          <span
-            aria-hidden="true"
-            className="border-ink bg-lime inline-block size-2.5 shrink-0 rounded-full border-2"
-          />
-          <span>Mode Privasi Tersinkron</span>
+      {/* Sidebar Bottom-Left Footer: Logout */}
+      {user.clerkEnabled ? (
+        <div className="border-ink/25 mt-auto border-t-2 border-dashed pt-4">
+          <SignOutButton redirectUrl="/">
+            <Button
+              variant="outline"
+              size="sm"
+              className="hover:bg-coral/25 hover:text-expense min-h-10 w-full justify-start px-3.5 text-xs font-extrabold"
+            >
+              <LogOut className="size-4" aria-hidden="true" />
+              Keluar Akun
+            </Button>
+          </SignOutButton>
         </div>
-
-        <PrivacyToggleButton id="btn-privacy-sidebar" placement="sidebar" fullWidth />
-      </div>
+      ) : null}
     </aside>
   );
 }

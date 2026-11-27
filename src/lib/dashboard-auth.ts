@@ -3,7 +3,14 @@ import { redirect } from "next/navigation";
 import { connection } from "next/server";
 
 import type { DashboardUserProfile } from "@/components/layout/types";
+import {
+  DEFAULT_DISPLAY_NAME,
+  DEFAULT_HANDLE,
+  deriveClerkBlobatarSeed,
+  extractFirstName,
+} from "@/lib/blobatar";
 import { CLERK_URLS, isClerkServerConfigured } from "@/lib/clerk-config";
+import { getOrCreateProfile } from "@/lib/profile-server";
 
 export interface DashboardSessionInfo {
   userId: string;
@@ -28,31 +35,38 @@ export async function requireDashboardSession(
 }
 
 export async function getDashboardUserProfile(): Promise<DashboardUserProfile> {
-  const user = await currentUser();
+  const [{ userId }, user] = await Promise.all([auth(), currentUser()]);
 
-  const firstName =
-    user?.firstName?.trim() ||
-    user?.username?.trim() ||
-    user?.primaryEmailAddress?.emailAddress?.split("@")[0] ||
-    "Teman";
-
+  const email = user?.primaryEmailAddress?.emailAddress ?? null;
   const fullName = [user?.firstName, user?.lastName].filter(Boolean).join(" ").trim();
-  const displayName =
-    fullName || user?.username || user?.primaryEmailAddress?.emailAddress || "Teman Poko";
+  const clerkDisplayName =
+    fullName || user?.username?.trim() || email?.split("@")[0] || DEFAULT_DISPLAY_NAME;
 
-  const rawHandle =
-    user?.username ||
-    user?.firstName ||
-    user?.primaryEmailAddress?.emailAddress?.split("@")[0] ||
-    "poko";
-  const handle = rawHandle.toLowerCase().replace(/[^a-z0-9_]/g, "") || "poko";
+  const clerkHandle = user?.username?.trim() ? `@${user.username.trim()}` : DEFAULT_HANDLE;
+
+  const clerkSeed = deriveClerkBlobatarSeed({
+    id: userId ?? user?.id ?? null,
+    username: user?.username ?? null,
+    email,
+  });
+
+  const { profile, persisted } = await getOrCreateProfile({
+    userId: userId ?? user?.id ?? null,
+    clerkSeed,
+    fallbackDisplayName: clerkDisplayName,
+    fallbackHandle: clerkHandle,
+  });
 
   return {
-    firstName,
-    displayName,
-    handle,
-    email: user?.primaryEmailAddress?.emailAddress ?? null,
-    avatarSeed: user?.username || user?.id || handle,
+    id: profile.id,
+    firstName: extractFirstName(profile.display_name),
+    displayName: profile.display_name,
+    handle: profile.handle,
+    email,
+    blobatarSeed: profile.blobatar_seed,
+    blobatarFrame: profile.blobatar_frame,
+    privacyMode: profile.privacy_mode,
+    profilePersisted: persisted,
     clerkEnabled: true,
   };
 }

@@ -1,4 +1,5 @@
 import { AuthNavBar } from "@/components/auth/auth-nav-bar";
+import { BlobatarShowcase } from "@/components/showcase/blobatar-showcase";
 import { DesignSystemShowcase } from "@/components/showcase/design-system-showcase";
 import { cn, formatIDR } from "@/lib/utils";
 
@@ -64,6 +65,8 @@ export default function HomePage() {
           Drawer di mobile).
         </p>
       </header>
+
+      <BlobatarShowcase />
 
       <DesignSystemShowcase />
 

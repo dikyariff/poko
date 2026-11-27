@@ -1,8 +1,9 @@
-import { Show, SignOutButton, UserButton } from "@clerk/nextjs";
+import { Show, SignOutButton } from "@clerk/nextjs";
 import { LayoutDashboard, LogIn, LogOut, ShieldAlert, ShieldCheck, UserPlus } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 
+import { ClerkBlobatarBadge } from "@/components/auth/clerk-blobatar-badge";
 import { Button } from "@/components/ui/button";
 import { isClerkPublishableKeyConfigured } from "@/lib/clerk-config";
 
@@ -87,7 +88,7 @@ export function AuthNavBar() {
                   Keluar
                 </Button>
               </SignOutButton>
-              <UserButton />
+              <ClerkBlobatarBadge />
             </Show>
           </div>
         </Suspense>
