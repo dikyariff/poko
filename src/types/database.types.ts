@@ -359,6 +359,67 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      create_transaction: {
+        Args: {
+          p_amount: number;
+          p_category?: string;
+          p_destination_wallet_id?: string;
+          p_merchant?: string;
+          p_metadata?: Json;
+          p_note?: string;
+          p_occurred_at?: string;
+          p_source?: string;
+          p_type: string;
+          p_wallet_id: string;
+        };
+        Returns: {
+          amount: number;
+          category: string;
+          created_at: string;
+          destination_wallet_id: string | null;
+          id: string;
+          merchant: string | null;
+          metadata: Json;
+          note: string;
+          occurred_at: string;
+          source: string;
+          type: string;
+          updated_at: string;
+          user_id: string;
+          wallet_id: string;
+        };
+        SetofOptions: {
+          from: "*";
+          to: "transactions";
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
+      };
+      delete_transaction: {
+        Args: { p_transaction_id: string };
+        Returns: {
+          amount: number;
+          category: string;
+          created_at: string;
+          destination_wallet_id: string | null;
+          id: string;
+          merchant: string | null;
+          metadata: Json;
+          note: string;
+          occurred_at: string;
+          source: string;
+          type: string;
+          updated_at: string;
+          user_id: string;
+          wallet_id: string;
+        };
+        SetofOptions: {
+          from: "*";
+          to: "transactions";
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
+      };
       whoami_clerk_sub: { Args: never; Returns: Json };
     };
     Enums: {

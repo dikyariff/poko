@@ -36,3 +36,8 @@ export type ChallengeUpdate = TablesUpdate<"challenges">;
 export type MonthlyBudgetLog = Tables<"monthly_budget_logs">;
 export type MonthlyBudgetLogInsert = TablesInsert<"monthly_budget_logs">;
 export type MonthlyBudgetLogUpdate = TablesUpdate<"monthly_budget_logs">;
+
+export type CreateTransactionRpcArgs =
+  Database["public"]["Functions"]["create_transaction"]["Args"];
+export type DeleteTransactionRpcArgs =
+  Database["public"]["Functions"]["delete_transaction"]["Args"];
