@@ -1,3 +1,4 @@
+import { AuthNavBar } from "@/components/auth/auth-nav-bar";
 import { DesignSystemShowcase } from "@/components/showcase/design-system-showcase";
 import { cn, formatIDR } from "@/lib/utils";
 
@@ -41,6 +42,8 @@ const paletteTokens = [
 export default function HomePage() {
   return (
     <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-10 px-4 py-10 sm:px-8 sm:py-12">
+      <AuthNavBar />
+
       <header className="border-ink bg-card shadow-brutal-lg rounded-3xl border-[2.5px] p-6 sm:p-8">
         <div className="mb-4 flex flex-wrap items-center gap-2.5">
           <span className="border-ink bg-lime shadow-brutal-sm inline-flex items-center rounded-full border-2 px-3 py-1 font-mono text-xs font-bold tracking-wide uppercase">

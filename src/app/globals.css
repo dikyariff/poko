@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "@clerk/ui/themes/shadcn.css";
 
 :root {
   /* Poko Warm-Paper Neo-Brutalism Base Palette */
@@ -244,6 +245,20 @@
   }
 }
 
+@keyframes poko-blob-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+.poko-blob-float {
+  animation: poko-blob-float 7.5s ease-in-out infinite;
+}
+
 .poko-progress-stripes {
   background-image: repeating-linear-gradient(
     -45deg,
@@ -257,7 +272,72 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .poko-progress-stripes {
+  .poko-progress-stripes,
+  .poko-blob-float {
     animation: none;
   }
+}
+
+/* Poko Neo-Brutalist lock-in for Clerk live inputs & buttons (overrides Clerk Emotion ring/shadow defaults) */
+.cl-formButtonPrimary,
+.cl-socialButtonsBlockButton {
+  border: 2.5px solid var(--ink) !important;
+  box-shadow: 3px 3px 0px var(--ink) !important;
+  border-radius: 10px !important;
+  min-height: 44px !important;
+  transition:
+    transform 150ms ease-out,
+    box-shadow 150ms ease-out,
+    background-color 150ms ease-out !important;
+}
+
+.cl-formButtonPrimary {
+  background-color: var(--lime) !important;
+  color: var(--ink) !important;
+  font-weight: 800 !important;
+}
+
+.cl-formButtonPrimary:hover {
+  background-color: var(--lime-hover) !important;
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 4.5px 4.5px 0px var(--ink) !important;
+}
+
+.cl-socialButtonsBlockButton {
+  background-color: var(--bg-card) !important;
+  color: var(--ink) !important;
+  font-weight: 700 !important;
+}
+
+.cl-socialButtonsBlockButton:hover {
+  background-color: var(--bg-subtle) !important;
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 4.5px 4.5px 0px var(--ink) !important;
+}
+
+.cl-formButtonPrimary:active,
+.cl-socialButtonsBlockButton:active {
+  transform: translate(2px, 2px) !important;
+  box-shadow: none !important;
+}
+
+.cl-formFieldInput {
+  border: 2.5px solid var(--ink) !important;
+  border-radius: 10px !important;
+  background-color: var(--bg-card) !important;
+  color: var(--ink) !important;
+  min-height: 44px !important;
+  box-shadow: 2px 2px 0px var(--ink) !important;
+}
+
+.cl-formFieldInput:focus,
+.cl-formFieldInput:focus-visible {
+  outline: 3px solid var(--ink) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 5px var(--lime) !important;
+}
+
+.cl-footer {
+  border-top: 2.5px solid var(--ink) !important;
+  background: var(--bg-subtle) !important;
 }
