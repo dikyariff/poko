@@ -16,18 +16,20 @@ export function MobileBottomNav() {
       data-slot="mobile-bottom-nav"
       className="border-ink bg-card shadow-brutal fixed inset-x-3 bottom-[calc(10px+env(safe-area-inset-bottom,0px))] z-40 rounded-[20px] border-[3px] p-1.5 lg:hidden"
     >
-      <div className="relative grid grid-cols-5 items-center gap-1">
-        {/* Smooth sliding Neo-Brutalist active indicator pill */}
+      <div className="relative grid grid-cols-5 items-center">
+        {/* Smooth GPU-composited sliding Neo-Brutalist active indicator pill */}
         {activeIndex >= 0 ? (
-          <span
+          <div
             aria-hidden="true"
             data-slot="mobile-nav-indicator"
             style={{
-              width: "calc((100% - 16px) / 5)",
-              transform: `translate3d(calc(${activeIndex} * (100% + 4px)), -2px, 0)`,
+              width: "20%",
+              transform: `translate3d(${activeIndex * 100}%, -2px, 0)`,
             }}
-            className="border-ink bg-lime pointer-events-none absolute inset-y-0 left-0 z-0 rounded-xl border-2 shadow-[2px_2px_0px_#111111] transition-transform duration-300 ease-[cubic-bezier(0.34,1.35,0.64,1)] will-change-transform motion-reduce:transition-none"
-          />
+            className="pointer-events-none absolute inset-y-0 left-0 z-0 px-0.5 transition-transform duration-300 ease-[cubic-bezier(0.34,1.35,0.64,1)] will-change-transform motion-reduce:transition-none"
+          >
+            <span className="border-ink bg-lime block h-full w-full rounded-xl border-2 shadow-[2px_2px_0px_#111111]" />
+          </div>
         ) : null}
 
         {DASHBOARD_NAV_ITEMS.map((item) => {
@@ -41,7 +43,7 @@ export function MobileBottomNav() {
               aria-label={item.label}
               aria-current={active ? "page" : undefined}
               className={cn(
-                "relative z-10 flex min-h-[48px] min-w-0 flex-col items-center justify-center gap-1 rounded-xl border-2 border-transparent bg-transparent px-1 py-1.5 text-center transition-[color,transform] duration-200 active:scale-95",
+                "relative z-10 flex min-h-[48px] min-w-0 flex-col items-center justify-center gap-1 rounded-xl px-1.5 py-1.5 text-center transition-[color,transform] duration-200 active:scale-95",
                 active ? "text-ink -translate-y-0.5" : "text-ink-muted hover:text-ink"
               )}
             >

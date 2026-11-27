@@ -5,6 +5,7 @@ import { useState } from "react";
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { BlobatarStudioModal } from "@/components/layout/blobatar-studio-modal";
 import { MobileBottomNav } from "@/components/layout/mobile-bottom-nav";
+import { MobileTabTransition } from "@/components/layout/mobile-tab-transition";
 import { TopHeader } from "@/components/layout/top-header";
 import type { DashboardUserProfile } from "@/components/layout/types";
 import { extractFirstName, type BlobatarProfileRecord } from "@/lib/blobatar";
@@ -66,9 +67,9 @@ export function DashboardShell({ user, children }: DashboardShellProps) {
         <main
           id="main-content"
           tabIndex={-1}
-          className="mx-auto flex w-full max-w-[1180px] flex-1 flex-col gap-6 px-4 pt-5 pb-[calc(6.5rem+env(safe-area-inset-bottom,0px))] focus:outline-none sm:px-6 lg:px-7 lg:py-7"
+          className="mx-auto flex w-full max-w-[1180px] flex-1 flex-col gap-6 overflow-x-clip px-4 pt-5 pb-[calc(6.5rem+env(safe-area-inset-bottom,0px))] focus:outline-none sm:px-6 lg:px-7 lg:py-7"
         >
-          {children}
+          <MobileTabTransition>{children}</MobileTabTransition>
         </main>
       </div>
 

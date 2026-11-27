@@ -7,6 +7,7 @@ import { HomeDreamPreview } from "@/components/dashboard/home-dream-preview";
 import { InsightPokoAI } from "@/components/dashboard/insight-poko-ai";
 import { RecentTransactions } from "@/components/dashboard/recent-transactions";
 import { WalletStrip } from "@/components/dashboard/wallet-strip";
+import { MobileTabSlideContent } from "@/components/layout/mobile-tab-transition";
 import { Skeleton } from "@/components/ui/skeleton";
 import { requireDashboardSession } from "@/lib/dashboard-auth";
 import { getHomeDashboardData } from "@/lib/home-dashboard-data";
@@ -38,7 +39,7 @@ async function DashboardHomeContent() {
   const dashboardData = await getHomeDashboardData(userId);
 
   return (
-    <div className="flex w-full flex-col gap-5 sm:gap-6">
+    <MobileTabSlideContent className="gap-5 sm:gap-6">
       {/* Banner peringatan lembut bila fallback mode aktif */}
       {dashboardData.warningMessage ? (
         <div
@@ -90,7 +91,7 @@ async function DashboardHomeContent() {
           />
         </div>
       </div>
-    </div>
+    </MobileTabSlideContent>
   );
 }
 
