@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 
 import { RoutePlaceholderCard } from "@/components/dashboard/route-placeholder-card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { requireDashboardSession } from "@/lib/dashboard-auth";
 
 export const metadata: Metadata = {
@@ -8,7 +10,7 @@ export const metadata: Metadata = {
   description: "Tantangan hemat harian, XP finansial, dan pelindung batas jajan di Poko Planner.",
 };
 
-export default async function MissionsPage() {
+async function MissionsContent() {
   await requireDashboardSession("/dashboard/missions");
 
   return (
@@ -36,5 +38,13 @@ export default async function MissionsPage() {
         },
       ]}
     />
+  );
+}
+
+export default function MissionsPage() {
+  return (
+    <Suspense fallback={<Skeleton className="h-72 w-full rounded-[22px]" />}>
+      <MissionsContent />
+    </Suspense>
   );
 }

@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 
 import { RoutePlaceholderCard } from "@/components/dashboard/route-placeholder-card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { requireDashboardSession } from "@/lib/dashboard-auth";
 
 export const metadata: Metadata = {
@@ -8,7 +10,7 @@ export const metadata: Metadata = {
   description: "Riwayat pemasukan, pengeluaran, dan transfer dompet di Poko Planner.",
 };
 
-export default async function TransactionsPage() {
+async function TransactionsContent() {
   await requireDashboardSession("/dashboard/transactions");
 
   return (
@@ -39,5 +41,13 @@ export default async function TransactionsPage() {
         },
       ]}
     />
+  );
+}
+
+export default function TransactionsPage() {
+  return (
+    <Suspense fallback={<Skeleton className="h-72 w-full rounded-[22px]" />}>
+      <TransactionsContent />
+    </Suspense>
   );
 }

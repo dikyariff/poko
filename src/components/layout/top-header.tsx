@@ -35,9 +35,9 @@ export function TopHeader({ user, onOpenBlobatarStudio }: TopHeaderProps) {
   return (
     <header
       data-slot="top-header"
-      className="border-ink bg-canvas/95 sticky top-0 z-30 border-b-[3px] backdrop-blur-sm"
+      className="border-ink bg-canvas/95 fixed inset-x-0 top-0 z-30 border-b-[3px] backdrop-blur-sm lg:left-[264px]"
     >
-      <div className="mx-auto flex min-h-[68px] w-full max-w-[1180px] items-center justify-between gap-3 px-4 py-3 lg:min-h-[76px] lg:px-7">
+      <div className="mx-auto flex h-[68px] w-full max-w-[1180px] items-center justify-between gap-3 px-4 lg:h-[76px] lg:px-7">
         {/* Left: Mobile Blobatar trigger (< 1024px) + Greeting (desktop) + Active Route Title */}
         <div className="flex min-w-0 flex-1 items-center gap-3">
           <button

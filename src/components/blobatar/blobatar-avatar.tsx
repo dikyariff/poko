@@ -4,10 +4,12 @@ import * as React from "react";
 
 import {
   DEFAULT_BLOBATAR_FRAME,
+  DEFAULT_BLOBATAR_MOOD,
   DEFAULT_BLOBATAR_SEED,
   generateBlobatarSpec,
   type BlobatarAccessoryType,
   type BlobatarFrame,
+  type BlobatarMood,
 } from "@/lib/blobatar";
 import { cn } from "@/lib/utils";
 
@@ -17,6 +19,8 @@ export interface BlobatarAvatarProps {
   /** Seed deterministik dari identitas profil Clerk user. */
   seed?: string;
   frame?: BlobatarFrame;
+  /** Ekspresi dinamis Blobatar (dipakai antara lain oleh Insight Poko AI). */
+  mood?: BlobatarMood;
   size?: BlobatarSize;
   showFrame?: boolean;
   trackCursor?: boolean;
@@ -260,6 +264,7 @@ function BlobatarAccessory({
 export function BlobatarAvatar({
   seed = DEFAULT_BLOBATAR_SEED,
   frame = DEFAULT_BLOBATAR_FRAME,
+  mood = DEFAULT_BLOBATAR_MOOD,
   size = "md",
   showFrame = true,
   trackCursor = true,
@@ -314,6 +319,7 @@ export function BlobatarAvatar({
       aria-label={resolvedAriaLabel}
       data-slot="blobatar-svg"
       data-seed={spec.normalizedSeed}
+      data-mood={mood}
       className={cn(
         "poko-blobatar-svg block shrink-0 overflow-visible select-none",
         showFrame ? sizePreset.svg : sizePreset.container,
@@ -356,36 +362,192 @@ export function BlobatarAvatar({
         <circle cx="29" cy="59" r="5" fill={spec.palette.cheek} opacity="0.72" />
         <circle cx="71" cy="59" r="5" fill={spec.palette.cheek} opacity="0.72" />
 
-        {/* Eyes with sclera + clamped cursor-tracking pupils */}
+        {/* Eyes & Mouth by Mood */}
         <g
           data-slot="blobatar-eyes"
           className={cn("poko-blobatar-eyes", animateIdle && "poko-blobatar-blink")}
           style={blinkStyle}
         >
-          <circle cx="38" cy="50" r="6.4" fill="#FFFFFF" stroke="#111111" strokeWidth="2.6" />
-          <circle cx="62" cy="50" r="6.4" fill="#FFFFFF" stroke="#111111" strokeWidth="2.6" />
-          <g
-            ref={pupilsRef}
-            data-slot="blobatar-pupils"
-            data-pupil-x="0"
-            data-pupil-y="0"
-            className="poko-blobatar-pupils"
-          >
-            <circle cx="38" cy="50" r="3.4" fill="#111111" />
-            <circle cx="36.8" cy="48.6" r="1.2" fill="#FFFFFF" />
-            <circle cx="62" cy="50" r="3.4" fill="#111111" />
-            <circle cx="60.8" cy="48.6" r="1.2" fill="#FFFFFF" />
-          </g>
+          {mood === "happy" ? (
+            <>
+              <circle cx="38" cy="50" r="6.4" fill="#FFFFFF" stroke="#111111" strokeWidth="2.6" />
+              <circle cx="62" cy="50" r="6.4" fill="#FFFFFF" stroke="#111111" strokeWidth="2.6" />
+              <g
+                ref={pupilsRef}
+                data-slot="blobatar-pupils"
+                data-pupil-x="0"
+                data-pupil-y="0"
+                className="poko-blobatar-pupils"
+              >
+                <circle cx="38" cy="50" r="3.4" fill="#111111" />
+                <circle cx="36.8" cy="48.6" r="1.2" fill="#FFFFFF" />
+                <circle cx="62" cy="50" r="3.4" fill="#111111" />
+                <circle cx="60.8" cy="48.6" r="1.2" fill="#FFFFFF" />
+              </g>
+            </>
+          ) : null}
+
+          {mood === "chill" ? (
+            <g
+              ref={pupilsRef}
+              data-slot="blobatar-pupils"
+              data-pupil-x="0"
+              data-pupil-y="0"
+              className="poko-blobatar-pupils"
+            >
+              <path
+                d="M33 50 Q38 45.5 43 50"
+                fill="none"
+                stroke="#111111"
+                strokeWidth="3.4"
+                strokeLinecap="round"
+              />
+              <path
+                d="M57 50 Q62 45.5 67 50"
+                fill="none"
+                stroke="#111111"
+                strokeWidth="3.4"
+                strokeLinecap="round"
+              />
+            </g>
+          ) : null}
+
+          {mood === "hyped" ? (
+            <g
+              ref={pupilsRef}
+              data-slot="blobatar-pupils"
+              data-pupil-x="0"
+              data-pupil-y="0"
+              className="poko-blobatar-pupils"
+            >
+              <path d="M38 44 L40 49 L45 50 L40 52 L38 56 L36 52 L31 50 L36 49 Z" fill="#111111" />
+              <path d="M62 44 L64 49 L69 50 L64 52 L62 56 L60 52 L55 50 L60 49 Z" fill="#111111" />
+            </g>
+          ) : null}
+
+          {mood === "thinking" ? (
+            <>
+              <circle cx="38" cy="50" r="6" fill="#FFFFFF" stroke="#111111" strokeWidth="2.5" />
+              <circle cx="62" cy="48.5" r="6.4" fill="#FFFFFF" stroke="#111111" strokeWidth="2.5" />
+              <g
+                ref={pupilsRef}
+                data-slot="blobatar-pupils"
+                data-pupil-x="0"
+                data-pupil-y="0"
+                className="poko-blobatar-pupils"
+              >
+                <circle cx="38" cy="50" r="3.2" fill="#111111" />
+                <circle cx="62" cy="48.5" r="3.6" fill="#111111" />
+              </g>
+              <path d="M55 40 L67 38" stroke="#111111" strokeWidth="3" strokeLinecap="round" />
+            </>
+          ) : null}
+
+          {mood === "love" ? (
+            <g
+              ref={pupilsRef}
+              data-slot="blobatar-pupils"
+              data-pupil-x="0"
+              data-pupil-y="0"
+              className="poko-blobatar-pupils"
+            >
+              <path
+                d="M38 54.5 C38 54.5 31 49.5 32 45.5 C33 42.5 37 43.5 38 46.5 C39 43.5 43 42.5 44 45.5 C45 49.5 38 54.5 38 54.5 Z"
+                fill="#C51D44"
+                stroke="#111111"
+                strokeWidth="1.6"
+              />
+              <path
+                d="M62 54.5 C62 54.5 55 49.5 56 45.5 C57 42.5 61 43.5 62 46.5 C63 43.5 67 42.5 68 45.5 C69 49.5 62 54.5 62 54.5 Z"
+                fill="#C51D44"
+                stroke="#111111"
+                strokeWidth="1.6"
+              />
+            </g>
+          ) : null}
+
+          {mood === "broke" ? (
+            <g
+              ref={pupilsRef}
+              data-slot="blobatar-pupils"
+              data-pupil-x="0"
+              data-pupil-y="0"
+              className="poko-blobatar-pupils"
+            >
+              <path
+                d="M33 47 L42 52 M42 47 L33 52"
+                stroke="#111111"
+                strokeWidth="3.2"
+                strokeLinecap="round"
+              />
+              <path
+                d="M58 47 L67 52 M67 47 L58 52"
+                stroke="#111111"
+                strokeWidth="3.2"
+                strokeLinecap="round"
+              />
+            </g>
+          ) : null}
         </g>
 
-        {/* Friendly signature smile */}
-        <path
-          d="M41 61 Q50 70 59 61"
-          fill="none"
-          stroke="#111111"
-          strokeWidth="3.5"
-          strokeLinecap="round"
-        />
+        {/* Mouth by Mood */}
+        {mood === "hyped" ? (
+          <>
+            <path
+              d="M41 60 Q50 72 59 60 Z"
+              fill="#111111"
+              stroke="#111111"
+              strokeWidth="2"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M81 26 L83 30 L87 31 L83 33 L81 37 L79 33 L75 31 L79 30 Z"
+              fill="#FFE14D"
+              stroke="#111111"
+              strokeWidth="1.8"
+            />
+          </>
+        ) : mood === "thinking" ? (
+          <path
+            d="M44 63 Q50 60 57 63"
+            fill="none"
+            stroke="#111111"
+            strokeWidth="3.2"
+            strokeLinecap="round"
+          />
+        ) : mood === "broke" ? (
+          <>
+            <path
+              d="M43 64 Q46.5 60 50 64 Q53.5 68 57 64"
+              fill="none"
+              stroke="#111111"
+              strokeWidth="3.2"
+              strokeLinecap="round"
+            />
+            <path
+              d="M74 36 Q79 44 74 47 Q69 44 74 36 Z"
+              fill="#5CE1FF"
+              stroke="#111111"
+              strokeWidth="2.2"
+            />
+          </>
+        ) : mood === "chill" ? (
+          <path
+            d="M44 62 Q50 66 56 62"
+            fill="none"
+            stroke="#111111"
+            strokeWidth="3.2"
+            strokeLinecap="round"
+          />
+        ) : (
+          <path
+            d="M41 61 Q50 70 59 61"
+            fill="none"
+            stroke="#111111"
+            strokeWidth="3.5"
+            strokeLinecap="round"
+          />
+        )}
       </g>
     </svg>
   );

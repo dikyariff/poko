@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 
 import { RoutePlaceholderCard } from "@/components/dashboard/route-placeholder-card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { requireDashboardSession } from "@/lib/dashboard-auth";
 
 export const metadata: Metadata = {
@@ -8,7 +10,7 @@ export const metadata: Metadata = {
   description: "Grafik arus kas bulanan dan ringkasan pengeluaran per kategori di Poko Planner.",
 };
 
-export default async function ReportsPage() {
+async function ReportsContent() {
   await requireDashboardSession("/dashboard/reports");
 
   return (
@@ -36,5 +38,13 @@ export default async function ReportsPage() {
         },
       ]}
     />
+  );
+}
+
+export default function ReportsPage() {
+  return (
+    <Suspense fallback={<Skeleton className="h-72 w-full rounded-[22px]" />}>
+      <ReportsContent />
+    </Suspense>
   );
 }

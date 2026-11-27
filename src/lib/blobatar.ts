@@ -2,10 +2,14 @@ export const BLOBATAR_FRAMES = ["rounded", "circle", "squircle"] as const;
 
 export type BlobatarFrame = (typeof BLOBATAR_FRAMES)[number];
 
+export const BLOBATAR_MOODS = ["happy", "chill", "hyped", "thinking", "love", "broke"] as const;
+
+export type BlobatarMood = (typeof BLOBATAR_MOODS)[number];
+
 export const DEFAULT_DISPLAY_NAME = "Niel";
 export const DEFAULT_HANDLE = "@nielpoko";
 export const DEFAULT_BLOBATAR_SEED = "nielpoko";
-export const DEFAULT_BLOBATAR_MOOD = "happy" as const;
+export const DEFAULT_BLOBATAR_MOOD: BlobatarMood = "happy";
 export const DEFAULT_BLOBATAR_FRAME: BlobatarFrame = "rounded";
 
 export const PROFILE_LIMITS = {
@@ -64,6 +68,10 @@ export interface ClerkSeedSource {
 
 export function isBlobatarFrame(value: unknown): value is BlobatarFrame {
   return typeof value === "string" && (BLOBATAR_FRAMES as readonly string[]).includes(value);
+}
+
+export function isBlobatarMood(value: unknown): value is BlobatarMood {
+  return typeof value === "string" && (BLOBATAR_MOODS as readonly string[]).includes(value);
 }
 
 export function normalizeBlobatarFrame(value: unknown): BlobatarFrame {

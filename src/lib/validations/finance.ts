@@ -97,40 +97,13 @@ export const POKO_TRANSFER_CATEGORY: PokoCategoryOption = {
 
 export const POKO_STARTER_WALLETS = [
   {
-    name: "BCA",
-    wallet_type: "bank" as WalletType,
-    balance: 0,
-    color: "#5CE1FF",
-    icon: "landmark",
-    is_primary_savings: false,
-    sort_order: 1,
-  },
-  {
-    name: "GoPay",
-    wallet_type: "ewallet" as WalletType,
-    balance: 0,
-    color: "#C8FF3D",
-    icon: "smartphone",
-    is_primary_savings: false,
-    sort_order: 2,
-  },
-  {
-    name: "Tunai",
-    wallet_type: "cash" as WalletType,
-    balance: 0,
-    color: "#FFE14D",
-    icon: "banknote",
-    is_primary_savings: false,
-    sort_order: 3,
-  },
-  {
     name: "Tabungan Utama",
     wallet_type: "savings" as WalletType,
     balance: 0,
     color: "#7CFFB2",
     icon: "piggy-bank",
     is_primary_savings: true,
-    sort_order: 4,
+    sort_order: 1,
   },
 ] as const;
 

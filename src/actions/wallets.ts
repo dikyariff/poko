@@ -171,7 +171,7 @@ export async function getWallets(options?: {
 }
 
 /**
- * Memastikan user memiliki starter set dompet Poko (`BCA`, `GoPay`, `Tunai`, `Tabungan Utama`).
+ * Memastikan user memiliki dompet bawaan Poko (`Tabungan Utama`).
  * Idempotent: jika user sudah memiliki minimal 1 dompet (aktif atau arsip), tidak membuat duplikat.
  */
 export async function ensureStarterWallets(): Promise<ActionResult<Wallet[]>> {
