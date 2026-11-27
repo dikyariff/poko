@@ -2,13 +2,13 @@ import { Suspense } from "react";
 import { AlertTriangle } from "lucide-react";
 import type { Metadata } from "next";
 
+import DashboardLoading from "@/app/dashboard/loading";
 import { HeroBalanceCard } from "@/components/dashboard/hero-balance-card";
 import { HomeDreamPreview } from "@/components/dashboard/home-dream-preview";
 import { InsightPokoAI } from "@/components/dashboard/insight-poko-ai";
 import { RecentTransactions } from "@/components/dashboard/recent-transactions";
 import { WalletStrip } from "@/components/dashboard/wallet-strip";
 import { MobileTabSlideContent } from "@/components/layout/mobile-tab-transition";
-import { Skeleton } from "@/components/ui/skeleton";
 import { requireDashboardSession } from "@/lib/dashboard-auth";
 import { getHomeDashboardData } from "@/lib/home-dashboard-data";
 
@@ -17,22 +17,6 @@ export const metadata: Metadata = {
   description:
     "Ringkasan total saldo bersih, arus kas bulanan, dompet aktif, transaksi terbaru, Impian & Tabungan, serta Insight Poko AI.",
 };
-
-function DashboardHomeSkeleton() {
-  return (
-    <div className="flex w-full flex-col gap-5 sm:gap-6">
-      <div className="grid gap-5 xl:grid-cols-12">
-        <Skeleton className="h-64 w-full rounded-[22px] xl:col-span-8" />
-        <Skeleton className="h-64 w-full rounded-[22px] xl:col-span-4" />
-      </div>
-      <Skeleton className="h-44 w-full rounded-[22px]" />
-      <div className="grid gap-5 lg:grid-cols-12">
-        <Skeleton className="h-72 w-full rounded-[22px] lg:col-span-7" />
-        <Skeleton className="h-72 w-full rounded-[22px] lg:col-span-5" />
-      </div>
-    </div>
-  );
-}
 
 async function DashboardHomeContent() {
   const { userId } = await requireDashboardSession("/dashboard");
@@ -51,9 +35,9 @@ async function DashboardHomeContent() {
         </div>
       ) : null}
 
-      {/* Row 1: Hero Balance Card (8 col) + Insight Poko AI (4 col) */}
+      {/* Row 1: Hero Balance Card (7 col) + Multi-Wallet Card Deck (5 col) */}
       <div className="grid gap-5 xl:grid-cols-12">
-        <div className="min-w-0 xl:col-span-8">
+        <div className="min-w-0 xl:col-span-7">
           <HeroBalanceCard
             totalBalance={dashboardData.metrics.totalBalance}
             monthlyIncome={dashboardData.metrics.monthlyIncome}
@@ -67,18 +51,12 @@ async function DashboardHomeContent() {
           />
         </div>
 
-        <div className="min-w-0 xl:col-span-4">
-          <InsightPokoAI
-            insights={dashboardData.aiInsights}
-            updatedAt={dashboardData.aiInsightUpdatedAt}
-          />
+        <div className="min-w-0 xl:col-span-5">
+          <WalletStrip wallets={dashboardData.wallets} dataSource={dashboardData.dataSource} />
         </div>
       </div>
 
-      {/* Row 2: Multi-Wallet Strip + Modal Tambah Dompet */}
-      <WalletStrip wallets={dashboardData.wallets} dataSource={dashboardData.dataSource} />
-
-      {/* Row 3: Recent Transactions (7 col) + Impian & Tabungan Preview (5 col) */}
+      {/* Row 2: Recent Transactions (7 col) + Impian & Tabungan Preview (5 col) */}
       <div className="grid gap-5 lg:grid-cols-12">
         <div className="min-w-0 lg:col-span-7">
           <RecentTransactions transactions={dashboardData.recentTransactions} />
@@ -91,13 +69,19 @@ async function DashboardHomeContent() {
           />
         </div>
       </div>
+
+      {/* Row 3: Insight Poko AI */}
+      <InsightPokoAI
+        insights={dashboardData.aiInsights}
+        updatedAt={dashboardData.aiInsightUpdatedAt}
+      />
     </MobileTabSlideContent>
   );
 }
 
 export default function DashboardPage() {
   return (
-    <Suspense fallback={<DashboardHomeSkeleton />}>
+    <Suspense fallback={<DashboardLoading />}>
       <DashboardHomeContent />
     </Suspense>
   );

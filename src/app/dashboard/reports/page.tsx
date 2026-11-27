@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 
+import ReportsLoading from "@/app/dashboard/reports/loading";
 import { RoutePlaceholderCard } from "@/components/dashboard/route-placeholder-card";
 import { MobileTabSlideContent } from "@/components/layout/mobile-tab-transition";
-import { Skeleton } from "@/components/ui/skeleton";
 import { requireDashboardSession } from "@/lib/dashboard-auth";
 
 export const metadata: Metadata = {
@@ -46,7 +46,7 @@ async function ReportsContent() {
 
 export default function ReportsPage() {
   return (
-    <Suspense fallback={<Skeleton className="h-72 w-full rounded-[22px]" />}>
+    <Suspense fallback={<ReportsLoading />}>
       <ReportsContent />
     </Suspense>
   );

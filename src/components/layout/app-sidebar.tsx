@@ -1,11 +1,10 @@
 "use client";
 
 import { SignOutButton } from "@clerk/nextjs";
-import { LogOut, Pencil } from "lucide-react";
+import { LogOut } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { BlobatarAvatar } from "@/components/blobatar/blobatar-avatar";
 import { DASHBOARD_NAV_ITEMS, isNavItemActive } from "@/components/layout/nav-config";
 import type { DashboardUserProfile } from "@/components/layout/types";
 import { Button } from "@/components/ui/button";
@@ -13,10 +12,9 @@ import { cn } from "@/lib/utils";
 
 export interface AppSidebarProps {
   user: DashboardUserProfile;
-  onOpenBlobatarStudio: () => void;
 }
 
-export function AppSidebar({ user, onOpenBlobatarStudio }: AppSidebarProps) {
+export function AppSidebar({ user }: AppSidebarProps) {
   const pathname = usePathname();
   const activeIndex = DASHBOARD_NAV_ITEMS.findIndex((item) => isNavItemActive(pathname, item.href));
 
@@ -48,37 +46,6 @@ export function AppSidebar({ user, onOpenBlobatarStudio }: AppSidebarProps) {
           </p>
         </div>
       </Link>
-
-      {/* Profile Card (Langsung pakai Blobatar, tanpa foto profil Google/Clerk UserButton) */}
-      <button
-        type="button"
-        onClick={onOpenBlobatarStudio}
-        aria-label="Buka Blobatar Studio untuk mengedit profil, bingkai avatar, dan Mode Privasi"
-        className="border-ink bg-subtle hover:bg-yellow shadow-brutal-sm flex min-h-16 w-full cursor-pointer items-center gap-3 rounded-2xl border-[2.5px] px-3 py-2.5 text-left transition-[transform,box-shadow,background-color] duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
-      >
-        <BlobatarAvatar
-          seed={user.blobatarSeed}
-          frame={user.blobatarFrame}
-          size="sm"
-          trackCursor
-          animateIdle
-          interactive
-          className="bg-yellow/45 shadow-none"
-          ariaLabel={`Blobatar ${user.displayName}`}
-        />
-        <span className="min-w-0 flex-1">
-          <span className="font-display text-ink block truncate text-sm leading-tight font-bold">
-            {user.displayName}
-          </span>
-          <span
-            translate="no"
-            className="text-ink-muted mt-0.5 block truncate font-mono text-[11px] font-bold"
-          >
-            {user.handle}
-          </span>
-        </span>
-        <Pencil className="text-ink size-4 shrink-0" aria-hidden="true" />
-      </button>
 
       {/* 5 Active-Aware Navigation Links with Smooth Sliding Indicator */}
       <nav aria-label="Menu aplikasi" className="relative flex flex-col gap-1.5">

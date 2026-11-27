@@ -1,47 +1,62 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 
-import { RoutePlaceholderCard } from "@/components/dashboard/route-placeholder-card";
+import { getTransactions, type TransactionWithWallets } from "@/actions/transactions";
+import { ensureStarterWallets, getWallets } from "@/actions/wallets";
+import TransactionsLoading from "@/app/dashboard/transactions/loading";
 import { MobileTabSlideContent } from "@/components/layout/mobile-tab-transition";
-import { Skeleton } from "@/components/ui/skeleton";
+import { getJakartaDateKey } from "@/components/transactions/transaction-utils";
+import { TransactionsWorkspace } from "@/components/transactions/transactions-workspace";
 import { requireDashboardSession } from "@/lib/dashboard-auth";
+import type { Wallet } from "@/types/database";
 
 export const metadata: Metadata = {
   title: "Catatan Transaksi — Poko",
-  description: "Riwayat pemasukan, pengeluaran, dan transfer dompet di Poko Planner.",
+  description:
+    "Riwayat pemasukan, pengeluaran, dan transfer antar dompet dengan pencarian cepat, multi-filter WIB, dan pencatatan atomik.",
 };
 
 async function TransactionsContent() {
   await requireDashboardSession("/dashboard/transactions");
 
+  const [walletsResult, transactionsResult] = await Promise.all([
+    getWallets(),
+    getTransactions({ limit: 200 }),
+  ]);
+
+  let wallets: Wallet[] = [];
+  let warningMessage: string | null = null;
+
+  if (walletsResult.ok) {
+    wallets = walletsResult.data;
+    if (wallets.length === 0) {
+      const starterResult = await ensureStarterWallets();
+      if (starterResult.ok) {
+        wallets = starterResult.data;
+      } else {
+        warningMessage = starterResult.error;
+      }
+    }
+  } else {
+    warningMessage = walletsResult.error;
+  }
+
+  let transactions: TransactionWithWallets[] = [];
+  if (transactionsResult.ok) {
+    transactions = transactionsResult.data;
+  } else if (!warningMessage) {
+    warningMessage = transactionsResult.error;
+  }
+
+  const todayKey = getJakartaDateKey(new Date());
+
   return (
-    <MobileTabSlideContent>
-      <RoutePlaceholderCard
-        badge="Phase 3 · Transaksi"
-        accentClass="bg-cyan/35"
-        title="Ruang Catatan Transaksi Siap Digunakan"
-        description="Daftar transaksi multi-dompet, filter kategori, pencarian cepat, dan pemindaian struk AI akan tampil di halaman ini dengan sinkronisasi saldo atomik."
-        roadmapNote="Mode Privasi sudah aktif di seluruh kartu preview. Modul CRUD Transaksi & RPC atomik dijadwalkan pada Task 8–11."
-        metrics={[
-          {
-            label: "Total Pemasukan (Preview)",
-            amount: 7250000,
-            prefix: "+",
-            toneClass: "text-income",
-          },
-          {
-            label: "Total Pengeluaran (Preview)",
-            amount: 2225000,
-            prefix: "-",
-            toneClass: "text-expense",
-          },
-          {
-            label: "Arus Kas Bersih (Preview)",
-            amount: 5025000,
-            prefix: "+",
-            toneClass: "text-ink",
-          },
-        ]}
+    <MobileTabSlideContent className="gap-5 sm:gap-6">
+      <TransactionsWorkspace
+        initialTransactions={transactions}
+        wallets={wallets}
+        todayKey={todayKey}
+        warningMessage={warningMessage}
       />
     </MobileTabSlideContent>
   );
@@ -49,7 +64,7 @@ async function TransactionsContent() {
 
 export default function TransactionsPage() {
   return (
-    <Suspense fallback={<Skeleton className="h-72 w-full rounded-[22px]" />}>
+    <Suspense fallback={<TransactionsLoading />}>
       <TransactionsContent />
     </Suspense>
   );

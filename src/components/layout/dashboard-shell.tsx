@@ -59,7 +59,7 @@ export function DashboardShell({ user, children }: DashboardShellProps) {
         Langsung ke konten utama
       </a>
 
-      <AppSidebar user={activeUser} onOpenBlobatarStudio={() => setBlobatarOpen(true)} />
+      <AppSidebar user={activeUser} />
 
       <div className="flex min-w-0 flex-1 flex-col pt-[68px] lg:pt-[76px] lg:pl-[264px]">
         <TopHeader user={activeUser} onOpenBlobatarStudio={() => setBlobatarOpen(true)} />

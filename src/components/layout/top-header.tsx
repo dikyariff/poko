@@ -1,13 +1,11 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { toast } from "sonner";
 
 import { BlobatarAvatar } from "@/components/blobatar/blobatar-avatar";
 import { getActiveRouteMeta } from "@/components/layout/nav-config";
 import type { DashboardUserProfile } from "@/components/layout/types";
-import { Button } from "@/components/ui/button";
 
 export interface TopHeaderProps {
   user: DashboardUserProfile;
@@ -16,21 +14,14 @@ export interface TopHeaderProps {
 
 /**
  * Top Header Minimalis sesuai preferensi UX owner:
- * - Desktop (>= 1024px): HANYA greeting singkat + judul halaman aktif + tombol utama "+ Catat Transaksi".
- *   Tanpa tombol audio, tanpa badge streak bulanan, tanpa duplikasi profile pill.
+ * - Desktop (>= 1024px): greeting singkat + judul halaman aktif di kiri, dan kartu profil Blobatar di kanan.
+ *   Tanpa tombol Catat Transaksi, tanpa tombol audio, tanpa badge streak bulanan.
  * - Mobile (< 1024px): HANYA avatar Blobatar ringkas (buka Blobatar Studio) + judul halaman tampil penuh tanpa terpotong.
  *   Tanpa badge streak & tanpa tombol audio.
  */
 export function TopHeader({ user, onOpenBlobatarStudio }: TopHeaderProps) {
   const pathname = usePathname();
   const activeRoute = getActiveRouteMeta(pathname);
-
-  function handleQuickAddTransaction() {
-    toast.info("Catat Transaksi segera aktif", {
-      id: "poko-quick-add-toast",
-      description: "Modal tambah transaksi & Scan Struk AI akan hadir pada tahap berikutnya.",
-    });
-  }
 
   return (
     <header
@@ -71,13 +62,37 @@ export function TopHeader({ user, onOpenBlobatarStudio }: TopHeaderProps) {
           </div>
         </div>
 
-        {/* Right: Desktop Primary CTA ONLY (>= 1024px) */}
-        <div className="hidden shrink-0 items-center lg:flex">
-          <Button type="button" variant="default" onClick={handleQuickAddTransaction}>
-            <Plus className="size-4 stroke-[2.75]" aria-hidden="true" />
-            Catat Transaksi
-          </Button>
-        </div>
+        {/* Right: Desktop User Profile Card (>= 1024px) */}
+        <button
+          type="button"
+          onClick={onOpenBlobatarStudio}
+          data-slot="top-header-profile-card"
+          aria-label="Buka Blobatar Studio untuk mengedit profil, bingkai avatar, dan Mode Privasi"
+          className="border-ink bg-subtle hover:bg-yellow shadow-brutal-sm hidden min-h-[52px] max-w-[260px] shrink-0 cursor-pointer items-center gap-2.5 rounded-2xl border-[2.5px] px-2.5 py-1.5 text-left transition-[transform,box-shadow,background-color] duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal active:translate-x-[1px] active:translate-y-[1px] active:shadow-none lg:inline-flex"
+        >
+          <BlobatarAvatar
+            seed={user.blobatarSeed}
+            frame={user.blobatarFrame}
+            size="xs"
+            trackCursor
+            animateIdle
+            interactive
+            className="bg-yellow/45 shadow-none"
+            ariaLabel={`Blobatar ${user.displayName}`}
+          />
+          <span className="min-w-0 flex-1">
+            <span className="font-display text-ink block truncate text-sm leading-tight font-bold">
+              {user.displayName}
+            </span>
+            <span
+              translate="no"
+              className="text-ink-muted mt-0.5 block truncate font-mono text-[11px] font-bold"
+            >
+              {user.handle}
+            </span>
+          </span>
+          <Pencil className="text-ink size-3.5 shrink-0" aria-hidden="true" />
+        </button>
       </div>
     </header>
   );

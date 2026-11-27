@@ -46,10 +46,10 @@ export function InsightPokoAI({ insights, updatedAt }: InsightPokoAIProps) {
     <section
       aria-labelledby="insight-poko-ai-heading"
       data-slot="insight-poko-ai"
-      className="border-ink bg-lavender shadow-brutal flex h-full min-w-0 flex-col justify-between gap-4 rounded-[22px] border-[2.5px] p-5 sm:p-6"
+      className="border-ink bg-lavender shadow-brutal flex h-full min-w-0 flex-col justify-between gap-4 rounded-[22px] border-[2.5px] p-5 sm:p-6 lg:flex-row lg:items-center lg:gap-5"
     >
       {/* Header: Poko AI Buddy Blobatar + Status Badge */}
-      <div className="flex items-center gap-3.5">
+      <div className="flex shrink-0 items-center gap-3.5 lg:w-[240px]">
         <BlobatarAvatar
           seed="poko-ai-coach"
           frame="rounded"
@@ -86,14 +86,14 @@ export function InsightPokoAI({ insights, updatedAt }: InsightPokoAIProps) {
       </div>
 
       {/* Insight Quote Box */}
-      <div className="border-ink bg-card flex flex-1 items-center rounded-2xl border-[2.5px] p-4 shadow-[2px_2px_0px_#111111]">
+      <div className="border-ink bg-card flex min-w-0 flex-1 items-center rounded-2xl border-[2.5px] p-4 shadow-[2px_2px_0px_#111111]">
         <p data-slot="ai-insight-text" className="text-ink text-sm leading-relaxed font-semibold">
           {activeInsight.text}
         </p>
       </div>
 
       {/* Footer: Counter/Source + Cycle Button */}
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 lg:flex-col lg:items-end">
         <span className="text-ink font-mono text-[11px] font-extrabold">
           {hasMultiple
             ? `Tip ${normalizedIndex + 1} / ${safeInsights.length}`

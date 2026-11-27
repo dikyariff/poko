@@ -54,6 +54,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
+import { NominalInput } from "@/components/ui/nominal-input";
 import { Progress } from "@/components/ui/progress";
 import {
   ResponsiveModal,
@@ -77,7 +78,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { cn, formatIDR } from "@/lib/utils";
+import { cn, formatIDR, formatNominalInput, parseNominalInput } from "@/lib/utils";
 
 const walletSamples = [
   { name: "BCA Utama", kind: "Rekening", balance: 6450000, badge: "bg-lime" },
@@ -89,14 +90,14 @@ export function DesignSystemShowcase() {
   const isDesktop = useMediaQuery("(min-width: 768px)", false);
   const [responsiveOpen, setResponsiveOpen] = React.useState(false);
   const [dreamProgress, setDreamProgress] = React.useState(72);
-  const [txAmount, setTxAmount] = React.useState("125000");
+  const [txAmount, setTxAmount] = React.useState(() => formatNominalInput("125000"));
   const [txNote, setTxNote] = React.useState("Kopi susu & roti bakar");
   const [selectedWallet, setSelectedWallet] = React.useState("bca");
   const [selectedCategory, setSelectedCategory] = React.useState("makan");
 
   function handleSaveQuickTx(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const parsed = Number(txAmount) || 0;
+    const parsed = parseNominalInput(txAmount) ?? 0;
     toast.success("Transaksi berhasil dicatat!", {
       description: `${txNote || "Catatan cepat"} · ${formatIDR(parsed)}`,
     });
@@ -226,14 +227,12 @@ export function DesignSystemShowcase() {
                       <label htmlFor="modal-nominal" className="text-xs font-extrabold uppercase">
                         Nominal (Rp)
                       </label>
-                      <Input
+                      <NominalInput
                         id="modal-nominal"
-                        type="number"
-                        inputMode="numeric"
-                        className="font-mono tabular-nums"
+                        showPrefix
                         value={txAmount}
-                        onChange={(e) => setTxAmount(e.target.value)}
-                        placeholder="Contoh: 45000"
+                        onValueChange={(_numeric, formatted) => setTxAmount(formatted)}
+                        placeholder="Contoh: 45.000"
                       />
                     </div>
                     <div className="flex flex-col gap-1.5">
@@ -387,13 +386,11 @@ export function DesignSystemShowcase() {
               <label htmlFor="showcase-amount" className="text-xs font-extrabold uppercase">
                 Nominal Transaksi
               </label>
-              <Input
+              <NominalInput
                 id="showcase-amount"
-                type="number"
-                inputMode="numeric"
-                className="font-mono tabular-nums"
+                showPrefix
                 value={txAmount}
-                onChange={(e) => setTxAmount(e.target.value)}
+                onValueChange={(_numeric, formatted) => setTxAmount(formatted)}
                 placeholder="Masukkan nominal Rupiah..."
               />
             </div>
