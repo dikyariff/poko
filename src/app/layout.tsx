@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JetBrains_Mono, Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
 
 import { PokoClerkProvider } from "@/components/auth/clerk-provider-wrapper";
+import { PrivacyProvider } from "@/components/providers/privacy-provider";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
@@ -44,8 +45,10 @@ export default function RootLayout({
     >
       <body className="bg-canvas text-ink flex min-h-full flex-col font-sans">
         <PokoClerkProvider>
-          {children}
-          <Toaster />
+          <PrivacyProvider>
+            {children}
+            <Toaster />
+          </PrivacyProvider>
         </PokoClerkProvider>
       </body>
     </html>
